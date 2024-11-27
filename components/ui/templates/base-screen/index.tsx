@@ -5,16 +5,27 @@ import {
   SafeAreaView,
   SafeAreaViewProps,
 } from "react-native-safe-area-context";
-import { Modal } from "../../modal";
+import { Modal, ModalProps } from "../../modal";
 
 interface TemplateBaseProps extends SafeAreaViewProps {
   children: React.ReactNode;
   style?: ViewStyle;
   isLoading?: boolean;
+  bottomSheet?: {
+    props: ModalProps["BottomSheet"] | null;
+    onSubmit?: () => void;
+    onClose: () => void;
+  } | null;
 }
 
 export function Base(props: TemplateBaseProps) {
-  const { children, style, isLoading = false, ...rest } = props;
+  const {
+    children,
+    style,
+    isLoading = false,
+    bottomSheet = null,
+    ...rest
+  } = props;
 
   return (
     <SafeAreaProvider>
@@ -29,6 +40,12 @@ export function Base(props: TemplateBaseProps) {
         }}
         {...rest}
       >
+        <Modal.BottomSheet
+          {...bottomSheet?.props}
+          isVisible={!!bottomSheet?.props}
+          onSubmit={bottomSheet?.onSubmit}
+          onClose={bottomSheet?.onClose}
+        />
         {isLoading && <Modal.Loading />}
         {children}
       </SafeAreaView>
