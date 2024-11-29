@@ -22,7 +22,7 @@ import { Utils } from "@/utils";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
+const Routes = Utils.Constants.Routes;
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
@@ -43,10 +43,25 @@ export default function RootLayout() {
     return null;
   }
 
+  function handleRouteChange(route: string) {
+    return route.replace("/", "");
+  }
+
+  const unprotectRoutes = Object.values(Routes.unprotected).map(
+    handleRouteChange
+  );
+
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+          {unprotectRoutes.map((route) => (
+            <Stack.Screen
+              key={route}
+              name={route}
+              options={{ headerShown: false }}
+            />
+          ))}
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
