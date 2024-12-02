@@ -1,17 +1,18 @@
 import { ActivityIndicator, Modal, View } from "react-native";
 import { Text } from "../texts";
 import { theme } from "@/styles/theme";
+import { AnimatedOverlay } from "./animated-overlay";
 
 export function Loading() {
   const loadingText = "Carregando\nPor favor, aguarde";
   return (
     <Modal visible transparent>
+      <AnimatedOverlay isVisible backgroundColor={theme.color.gray["064"]} />
       <View
         style={{
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: theme.color.gray["064"],
         }}
       >
         <View
