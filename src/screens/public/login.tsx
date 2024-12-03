@@ -39,10 +39,9 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
         setFeedbackProps(feedBackWarningProps);
         return;
       }
-
+      setFeedbackProps(null);
       navigation.reset({ index: 0, routes: [{ name: "Home" }] });
-      setIsLoading(false);
-    } catch (error) {
+    } finally {
       setIsLoading(false);
     }
   }
@@ -59,8 +58,6 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
     scheme: "warning",
   } as ModalProps["BottomSheet"];
 
-  const canGoBack = navigation.canGoBack();
-
   return (
     <Template.Base
       style={{
@@ -73,13 +70,15 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
         onSubmit: handleCloseBottomSheet,
       }}
     >
-      {canGoBack && <Button.Back onPress={() => navigation.pop()} />}
+      {navigation.canGoBack() && (
+        <Button.Back onPress={() => navigation.pop()} />
+      )}
 
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          marginTop: canGoBack ? 90 : 0,
-          justifyContent: canGoBack ? "flex-start" : "center",
+          marginTop: navigation.canGoBack() ? 90 : 0,
+          justifyContent: navigation.canGoBack() ? "flex-start" : "center",
         }}
         keyboardShouldPersistTaps="handled"
       >
