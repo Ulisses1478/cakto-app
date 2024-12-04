@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   SafeAreaViewProps,
 } from "react-native-safe-area-context";
-import { Modal, ModalProps } from "../../modal";
+import { Modal } from "../../modal";
 
 const BGImages = {
   home: require("@/assets/images/bg-home.png"),
@@ -18,11 +18,6 @@ interface TemplateBaseProps extends SafeAreaViewProps {
   asBackgroundImage?: {
     source: keyof typeof BGImages;
   } | null;
-  bottomSheet?: {
-    props: ModalProps["BottomSheet"] | null;
-    onSubmit?: () => void;
-    onClose: () => void;
-  } | null;
 }
 
 export function Base(props: TemplateBaseProps) {
@@ -30,7 +25,6 @@ export function Base(props: TemplateBaseProps) {
     children,
     style,
     isLoading = false,
-    bottomSheet = null,
     asBackgroundImage = null,
     ...rest
   } = props;
@@ -51,12 +45,6 @@ export function Base(props: TemplateBaseProps) {
           }}
           {...rest}
         >
-          <Modal.BottomSheet
-            {...bottomSheet?.props}
-            isVisible={!!bottomSheet?.props}
-            onSubmit={bottomSheet?.onSubmit}
-            onClose={bottomSheet?.onClose}
-          />
           {isLoading && <Modal.Loading />}
           {children}
         </SafeAreaView>

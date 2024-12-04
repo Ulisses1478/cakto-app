@@ -26,8 +26,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "src/assets/images/cakto-image.png",
+        "backgroundColor": "rgba(0, 161, 104, 1)"
       }
     }
   }
