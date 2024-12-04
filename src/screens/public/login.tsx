@@ -6,11 +6,26 @@ import {
   View,
   TextInput as RNTextInput,
 } from "react-native";
-import { Button, ModalProps, Template, Text, TextInput } from "@/components/ui";
+import {
+  Button,
+  Modal,
+  ModalProps,
+  Template,
+  Text,
+  TextInput,
+} from "@/components/ui";
 import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
 import { ContextHook } from "@/contexts";
 import { RouteStackParams } from "@/navigation/routes";
+
+const feedBackWarningProps = {
+  title: Utils.Constants.Text.login.warning.title,
+  description: Utils.Constants.Text.login.warning.description,
+  onSubmitText: Utils.Constants.Text.login.warning.onSubmitText,
+  onCancelText: Utils.Constants.Text.login.warning.onCancelText,
+  scheme: "warning",
+} as ModalProps["BottomSheet"]["props"];
 
 export function Login({ navigation }: RouteStackParams<"Login">) {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,13 +37,11 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
     password: "",
   });
 
+  const modalRef = useRef<ModalProps["BottomSheet"]["ref"]>(null);
+
   const { handleLogin } = ContextHook.useAuth();
 
   const passwordInputRef = useRef<RNTextInput>(null);
-
-  function handleCloseBottomSheet() {
-    setFeedbackProps(null);
-  }
 
   async function login() {
     setIsLoading(true);
@@ -36,27 +49,24 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
       const { success } = await handleLogin(credentials);
 
       if (!success) {
-        setFeedbackProps(feedBackWarningProps);
+        modalRef.current?.onOpen(feedBackWarningProps);
         return;
       }
-      setFeedbackProps(null);
+
       navigation.reset({ index: 0, routes: [{ name: "Home" }] });
     } finally {
       setIsLoading(false);
     }
   }
 
-  const feedBackWarningProps = {
-    title: Utils.Constants.Text.login.warning.title,
-    description: Utils.Constants.Text.login.warning.description,
-    onCancel: () => {
-      navigation.navigate("ForgotPassword", { email: credentials.email });
-      handleCloseBottomSheet();
-    },
-    onSubmitText: Utils.Constants.Text.login.warning.onSubmitText,
-    onCancelText: Utils.Constants.Text.login.warning.onCancelText,
-    scheme: "warning",
-  } as ModalProps["BottomSheet"];
+  feedBackWarningProps.onCancel = () => {
+    console.log("em construção");
+    modalRef.current?.onClose();
+  };
+
+  feedBackWarningProps.onSubmit = () => {
+    modalRef.current?.onClose();
+  };
 
   return (
     <Template.Base
@@ -64,16 +74,11 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
         paddingTop: theme.spacing.sm,
       }}
       isLoading={isLoading}
-      bottomSheet={{
-        props: feedbackProps,
-        onClose: handleCloseBottomSheet,
-        onSubmit: handleCloseBottomSheet,
-      }}
     >
       {navigation.canGoBack() && (
         <Button.Back onPress={() => navigation.pop()} />
       )}
-
+      <Modal.BottomSheet ref={modalRef} />
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
