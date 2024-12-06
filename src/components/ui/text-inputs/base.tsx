@@ -5,6 +5,7 @@ import {
   TextStyle,
   TextInputProps as RNTextInputProps,
   Pressable,
+  LayoutAnimation,
 } from "react-native";
 import { Text } from "../texts";
 import { Image } from "@/assets/images";
@@ -52,6 +53,8 @@ function TextInputBase(props: TextInputProps, ref: any) {
     textProps,
     focusedStyle,
     secureTextEntry = false,
+    onFocus,
+    onBlur,
     ...rest
   } = props;
 
@@ -67,6 +70,11 @@ function TextInputBase(props: TextInputProps, ref: any) {
   };
 
   const flexDirection = secureTextEntry ? "row" : "column";
+
+  function handleInputFocus(focus: boolean) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    setIsFocused(focus);
+  }
 
   return (
     <View style={{ gap: theme.spacing.nano }}>
@@ -91,10 +99,14 @@ function TextInputBase(props: TextInputProps, ref: any) {
             ...inputStyle,
             ...style,
           }}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => {
-            setIsFocused(false);
+          onFocus={(value) => {
+            handleInputFocus(true);
+            onFocus?.(value);
+          }}
+          onBlur={(value) => {
+            handleInputFocus(false);
             setShowPassword(false);
+            onBlur?.(value);
           }}
           placeholderTextColor={placeholderTextColor}
           {...(secureTextEntry ? basePasswordProps : {})}
