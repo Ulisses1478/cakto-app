@@ -1,35 +1,75 @@
+import React from "react";
 import { theme } from "@/styles/theme";
-import { ImageBackground, ViewStyle } from "react-native";
 import {
-  SafeAreaProvider,
-  SafeAreaView,
-  SafeAreaViewProps,
-} from "react-native-safe-area-context";
+  ImageBackground,
+  StyleProp,
+  ScrollView,
+  FlexStyle,
+} from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import Constants from "expo-constants";
 import { Modal } from "../../modal";
+import { Button } from "../../buttons";
+import { TemplateBaseProps } from "./types";
 
 const BGImages = {
   home: require("@/assets/images/bg-home.png"),
 };
 
-interface TemplateBaseProps extends SafeAreaViewProps {
-  children: React.ReactNode;
-  style?: ViewStyle;
-  isLoading?: boolean;
-  asBackgroundImage?: {
-    source: keyof typeof BGImages;
-  } | null;
+function handleFlexView(canGoBack: boolean, isFocused: boolean) {
+  const flex: Partial<StyleProp<FlexStyle>> = {
+    justifyContent: "flex-start",
+    flexGrow: 1,
+  };
+
+  if ((canGoBack || !canGoBack) && !isFocused) {
+    flex.justifyContent = "center";
+  } else {
+    flex.justifyContent = "flex-start";
+  }
+
+  return flex;
 }
 
-export function Base(props: TemplateBaseProps) {
+// TODO: Create a listener for keyboard open/close
+export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
   const {
     children,
     style,
     isLoading = false,
     asBackgroundImage = null,
+    scrollViewProps = {
+      wrapWithScrollView: false,
+      contentContainerStyle: {},
+      style: {},
+    },
+    canGoBack = false,
+    goBack = null,
+    keyboardIsOpen = false,
     ...rest
   } = props;
 
   function baseChildren() {
+    return (
+      <>
+        {isLoading && <Modal.Loading />}
+        {children}
+      </>
+    );
+  }
+
+  if (scrollViewProps?.wrapWithScrollView) {
+    scrollViewProps.style = scrollViewProps.style || {};
+    scrollViewProps.contentContainerStyle =
+      scrollViewProps.contentContainerStyle || {};
+
+    scrollViewProps.contentContainerStyle = {
+      ...handleFlexView(canGoBack, keyboardIsOpen),
+      ...(scrollViewProps.contentContainerStyle as object),
+    };
+  }
+
+  function wrapper() {
     return (
       <SafeAreaProvider>
         <SafeAreaView
@@ -38,15 +78,39 @@ export function Base(props: TemplateBaseProps) {
               ? "transparent"
               : theme.color.secondary.normal,
             flex: 1,
+            paddingHorizontal: theme.spacing.xxs,
             gap: theme.spacing.xl,
-            paddingLeft: theme.spacing.xxs,
-            paddingRight: theme.spacing.xxs,
             ...style,
+            position: "relative",
           }}
           {...rest}
         >
-          {isLoading && <Modal.Loading />}
-          {children}
+          {canGoBack && typeof goBack === "function" && !keyboardIsOpen && (
+            <Button.Back
+              onPress={goBack}
+              style={{
+                position: "absolute",
+                top: Constants.statusBarHeight + theme.spacing.xxs,
+                left: theme.spacing.xxs,
+              }}
+            />
+          )}
+
+          {scrollViewProps?.wrapWithScrollView ? (
+            <>
+              <ScrollView
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={scrollViewProps.contentContainerStyle}
+                style={scrollViewProps.style}
+                {...scrollViewProps}
+              >
+                {baseChildren()}
+              </ScrollView>
+              {scrollViewProps.footer}
+            </>
+          ) : (
+            baseChildren()
+          )}
         </SafeAreaView>
       </SafeAreaProvider>
     );
@@ -64,10 +128,10 @@ export function Base(props: TemplateBaseProps) {
           resizeMode="cover"
           source={BGImages[asBackgroundImage.source]}
         >
-          {baseChildren()}
+          {wrapper()}
         </ImageBackground>
       ) : (
-        baseChildren()
+        wrapper()
       )}
     </>
   );

@@ -3,6 +3,9 @@ import {
   Splash,
   Start,
   Login,
+  ForgotPassword,
+  ConfirmResetCode,
+  ResetPassword,
 } from "../screens/public";
 import { Home } from "@/screens/authenticated";
 
@@ -10,6 +13,9 @@ export type StackParams = {
   Splash: undefined;
   Start: undefined;
   Login: undefined;
+  ForgotPassword: { email?: string };
+  ConfirmResetCode: { email: string };
+  ResetPassword: { token: string; email?: string };
   Home: undefined;
 };
 
@@ -32,6 +38,21 @@ export const ROUTES = Object.freeze({
   login: {
     name: "Login",
     component: Login,
+    protected: false,
+  },
+  forgotPassword: {
+    name: "ForgotPassword",
+    component: ForgotPassword,
+    protected: false,
+  },
+  confirmResetCode: {
+    name: "ConfirmResetCode",
+    component: ConfirmResetCode,
+    protected: false,
+  },
+  resetPassword: {
+    name: "ResetPassword",
+    component: ResetPassword,
     protected: false,
   },
   home: {

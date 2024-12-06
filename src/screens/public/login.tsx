@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import {
   Linking,
   Pressable,
-  ScrollView,
   View,
   TextInput as RNTextInput,
+  Keyboard,
 } from "react-native";
 import {
   Button,
@@ -29,9 +29,7 @@ const feedBackWarningProps = {
 
 export function Login({ navigation }: RouteStackParams<"Login">) {
   const [isLoading, setIsLoading] = useState(false);
-  const [feedbackProps, setFeedbackProps] = useState<
-    ModalProps["BottomSheet"] | null
-  >(null);
+  const [isFocused, setIsFocused] = useState(false);
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -45,6 +43,8 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
 
   async function login() {
     setIsLoading(true);
+    setIsFocused(false);
+    Keyboard.dismiss();
     try {
       const { success } = await handleLogin(credentials);
 
@@ -60,7 +60,7 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
   }
 
   feedBackWarningProps.onCancel = () => {
-    console.log("em construção");
+    navigation.navigate("ForgotPassword", { email: credentials.email });
     modalRef.current?.onClose();
   };
 
@@ -74,76 +74,78 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
         paddingTop: theme.spacing.sm,
       }}
       isLoading={isLoading}
+      goBack={() => navigation.pop()}
+      canGoBack={navigation.canGoBack()}
+      keyboardIsOpen={isFocused}
+      scrollViewProps={{
+        wrapWithScrollView: true,
+        footer: (
+          <Pressable
+            onPress={async () => {
+              if (await Linking.canOpenURL(Utils.Constants.Url.register)) {
+                Linking.openURL(Utils.Constants.Url.register);
+              }
+            }}
+          >
+            <Text.Base style={{ textAlign: "center" }}>
+              {Utils.Constants.Text.login.register}
+            </Text.Base>
+          </Pressable>
+        ),
+      }}
     >
-      {navigation.canGoBack() && (
-        <Button.Back onPress={() => navigation.pop()} />
-      )}
       <Modal.BottomSheet ref={modalRef} />
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          marginTop: navigation.canGoBack() ? 90 : 0,
-          justifyContent: navigation.canGoBack() ? "flex-start" : "center",
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={{ gap: theme.spacing.sm }}>
-          <Text.Base style={{ fontSize: theme.font.size.lg }}>
-            {Utils.Constants.Text.login.title}
-          </Text.Base>
-          <View style={{ gap: theme.spacing.xxxs }}>
-            <TextInput.Base
-              keyboardType="email-address"
-              label={Utils.Constants.Text.login.emailLabel}
-              placeholder={Utils.Constants.Text.login.emailPlaceholder}
-              returnKeyType="next"
-              onSubmitEditing={() => passwordInputRef.current?.focus()}
-              autoCapitalize="none"
-              value={credentials.email}
-              onChangeText={(email) =>
-                setCredentials({ ...credentials, email })
-              }
-            />
-            <TextInput.Base
-              ref={passwordInputRef}
-              label={Utils.Constants.Text.login.passwordLabel}
-              placeholder={Utils.Constants.Text.login.passwordPlaceholder}
-              secureTextEntry
-              returnKeyType="send"
-              onSubmitEditing={login}
-              autoCapitalize="none"
-              value={credentials.password}
-              onChangeText={(password) =>
-                setCredentials({ ...credentials, password })
-              }
-            />
-          </View>
-          <View style={{ gap: theme.spacing.xxxs }}>
-            <Button.Base
-              title={Utils.Constants.Text.login.login}
-              variant="filled"
-              textProps={{ color: theme.color.secondary.normal }}
-              onPress={login}
-            />
-            <Button.Base
-              onPress={() => console.log("em construção")}
-              title={Utils.Constants.Text.login.forgotPassword}
-              variant="unfilled"
-            />
-          </View>
-        </View>
-      </ScrollView>
-      <Pressable
-        onPress={async () => {
-          if (await Linking.canOpenURL(Utils.Constants.Url.register)) {
-            Linking.openURL(Utils.Constants.Url.register);
-          }
-        }}
-      >
-        <Text.Base style={{ textAlign: "center" }}>
-          {Utils.Constants.Text.login.register}
+      <View style={{ gap: theme.spacing.sm }}>
+        <Text.Base style={{ fontSize: theme.font.size.lg }}>
+          {Utils.Constants.Text.login.title}
         </Text.Base>
-      </Pressable>
+        <View style={{ gap: theme.spacing.xxxs }}>
+          <TextInput.Base
+            keyboardType="email-address"
+            label={Utils.Constants.Text.login.emailLabel}
+            placeholder={Utils.Constants.Text.login.emailPlaceholder}
+            returnKeyType="next"
+            onSubmitEditing={() => passwordInputRef.current?.focus()}
+            autoCapitalize="none"
+            value={credentials.email}
+            onChangeText={(email) => setCredentials({ ...credentials, email })}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+          <TextInput.Base
+            ref={passwordInputRef}
+            label={Utils.Constants.Text.login.passwordLabel}
+            placeholder={Utils.Constants.Text.login.passwordPlaceholder}
+            secureTextEntry
+            returnKeyType="send"
+            onSubmitEditing={login}
+            autoCapitalize="none"
+            value={credentials.password}
+            onChangeText={(password) =>
+              setCredentials({ ...credentials, password })
+            }
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+        </View>
+        <View style={{ gap: theme.spacing.xxxs }}>
+          <Button.Base
+            title={Utils.Constants.Text.login.login}
+            variant="filled"
+            textProps={{ color: theme.color.secondary.normal }}
+            onPress={login}
+          />
+          <Button.Base
+            onPress={() =>
+              navigation.navigate("ForgotPassword", {
+                email: credentials.email,
+              })
+            }
+            title={Utils.Constants.Text.login.forgotPassword}
+            variant="unfilled"
+          />
+        </View>
+      </View>
     </Template.Base>
   );
 }

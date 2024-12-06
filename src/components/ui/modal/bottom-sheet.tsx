@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Modal from "react-native-modal";
 import { Image } from "@/assets/images";
 import { theme } from "@/styles/theme";
@@ -24,24 +24,30 @@ export interface BottomSheetRef {
 }
 
 export const BottomSheet = forwardRef(
-  (props: BottomSheetProps, ref: React.ForwardedRef<BottomSheetRef>) => {
-    const { isVisible = false, onClose, ...rest } = props;
+  (_: BottomSheetProps, ref: React.ForwardedRef<BottomSheetRef>) => {
     const [showModal, setShowModal] = useState(false);
     const data = useRef<BottomSheetProps | null>(null);
 
     function handleOnClose() {
       setShowModal(false);
-      onClose?.();
+      data?.current?.onClose?.();
+      setTimeout(() => {
+        data.current = null;
+      }, 350);
     }
 
-    useImperativeHandle(ref, () => ({
-      onClose: handleOnClose,
-      onOpen: (value: BottomSheetProps) => {
-        // TODO: Fix this hack for iOS modal animation
-        setTimeout(() => setShowModal(true), 50);
-        data.current = value;
-      },
-    }));
+    useImperativeHandle(
+      ref,
+      () => ({
+        onClose: handleOnClose,
+        onOpen: (value: BottomSheetProps) => {
+          // TODO: Fix this hack for iOS modal animation
+          setTimeout(() => setShowModal(true), 50);
+          data.current = value;
+        },
+      }),
+      [data]
+    );
 
     const colorScheme =
       data.current?.scheme === "warning"
@@ -81,6 +87,8 @@ export const BottomSheet = forwardRef(
             borderTopRightRadius: theme.borderRadius.md,
             position: "absolute",
             bottom: 0,
+            paddingBottom:
+              Platform.OS === "ios" ? theme.spacing.sm : theme.spacing.xxs,
           }}
         >
           {icon}

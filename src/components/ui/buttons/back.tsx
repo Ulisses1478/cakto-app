@@ -1,22 +1,25 @@
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { Image } from "@/assets/images";
 import { theme } from "@/styles/theme";
-import { Pressable } from "react-native";
 
-export function Back(props: { onPress: () => void }) {
+export function Back(props: Partial<TouchableOpacityProps>) {
+  const { style, onPress, ...rest } = props;
+
+  const currentStyles = {
+    width: theme.size.lg,
+    height: theme.size.lg,
+    borderWidth: theme.borderWidth.hairline,
+    borderColor: theme.color.white[100],
+    borderRadius: theme.borderRadius.pill,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
+    ...(style as any),
+  };
+
   return (
-    <Pressable
-      style={{
-        width: theme.size.lg,
-        height: theme.size.lg,
-        borderWidth: theme.borderWidth.hairline,
-        borderColor: theme.color.white[100],
-        borderRadius: theme.borderRadius.pill,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      {...props}
-    >
-      <Image.Chevron.Left />
-    </Pressable>
+    <TouchableOpacity style={currentStyles} onPress={onPress} {...rest}>
+      <Image.Chevron.Left onPress={onPress} />
+    </TouchableOpacity>
   );
 }

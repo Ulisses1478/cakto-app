@@ -3,6 +3,7 @@ import {
   TouchableOpacity,
   ViewStyle,
   ButtonProps as RNButtonProps,
+  ActivityIndicator,
 } from "react-native";
 import { Text } from "../texts";
 import { theme } from "@/styles/theme";
@@ -13,6 +14,8 @@ const baseButtonProps = {
   borderRadius: theme.borderRadius.pill,
   alignItems: "center",
   justifyContent: "center",
+  flexDirection: "row",
+  gap: theme.spacing.nano,
 };
 
 const filledButtonProps = {
@@ -53,10 +56,18 @@ interface ButtonProps extends RNButtonProps {
   style?: ViewStyle;
   textProps?: TextStyle;
   variant?: "filled" | "unfilled";
+  isLoading?: boolean;
 }
 
 export function Base(props: ButtonProps) {
-  const { title, style, textProps, variant = "filled", ...rest } = props;
+  const {
+    title,
+    style,
+    textProps,
+    variant = "filled",
+    isLoading = false,
+    ...rest
+  } = props;
 
   const buttonProps = getStyleByVariant(variant, style);
 
@@ -65,8 +76,14 @@ export function Base(props: ButtonProps) {
   }
 
   return (
-    <TouchableOpacity {...rest} style={buttonProps}>
+    <TouchableOpacity disabled={isLoading} {...rest} style={buttonProps}>
       <Text.Base style={textProps}>{title}</Text.Base>
+      {isLoading && (
+        <ActivityIndicator
+          size="small"
+          color={textProps?.color || theme.color.secondary.normal}
+        />
+      )}
     </TouchableOpacity>
   );
 }

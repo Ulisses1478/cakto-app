@@ -28,7 +28,8 @@
       "adaptiveIcon": {
         "foregroundImage": "src/assets/images/cakto-image.png",
         "backgroundColor": "rgba(0, 161, 104, 1)"
-      }
+      },
+      "package": "com.cakto.production"
     }
   }
 }
