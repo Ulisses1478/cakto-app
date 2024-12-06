@@ -72,7 +72,7 @@ function TextInputBase(props: TextInputProps, ref: any) {
   const flexDirection = secureTextEntry ? "row" : "column";
 
   function handleInputFocus(focus: boolean) {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsFocused(focus);
   }
 
