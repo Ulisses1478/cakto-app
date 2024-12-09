@@ -13,21 +13,22 @@
     "plugins": ["expo-font"],
     "orientation": "portrait",
     "icon": "src/assets/images/cakto-image.png",
-    "backgroundColor": "rgba(0, 161, 104, 1)",
+    "backgroundColor": "#00a168",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "src/assets/images/cakto-image.png",
       "resizeMode": "contain",
-      "backgroundColor": "rgba(0, 161, 104, 1)"
+      "backgroundColor": "#00a168"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cakto.production"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "src/assets/images/cakto-image.png",
-        "backgroundColor": "rgba(0, 161, 104, 1)"
+        "backgroundColor": "#00a168"
       },
       "package": "com.cakto.production"
     }
