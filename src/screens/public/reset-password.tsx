@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+import { View, TextInput as RNTextInput, Keyboard } from "react-native";
 import {
   Button,
   Modal,
@@ -7,9 +9,7 @@ import {
   TextInput,
 } from "@/components/ui";
 import { theme } from "@/styles/theme";
-import { View, TextInput as RNTextInput, Keyboard } from "react-native";
 import { Utils } from "@/utils";
-import { useRef, useState } from "react";
 import { Image } from "@/assets/images";
 import { Service } from "@/services";
 import { RouteStackParams } from "@/navigation/routes";

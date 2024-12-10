@@ -3,6 +3,6 @@ export const forgotPassword = {
   description:
     "Digite abaixo o seu E-mail de cadastro na Cakto para enviarmos um código de verificação!",
   emailLabel: "Email",
-  emailPlaceholder: "Digite seu E-mail",
+  emailPlaceholder: "Digite seu e-mail",
   sendCode: "Enviar código",
 };
