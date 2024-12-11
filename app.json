@@ -23,14 +23,20 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cakto.production"
+      "bundleIdentifier": "br.com.cakto"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "src/assets/images/splash-screen.png",
         "backgroundColor": "#00a168"
       },
-      "package": "com.cakto.production"
-    }
+      "package": "br.com.cakto"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "242176e5-bea9-4c4b-8255-d0b3ffebc866"
+      }
+    },
+    "owner": "gabriel.ubistart"
   }
 }
