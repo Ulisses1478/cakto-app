@@ -1,7 +1,7 @@
 export const login = {
   title: "Acessar minha conta",
   emailLabel: "Email",
-  emailPlaceholder: "Digite seu E-mail",
+  emailPlaceholder: "Digite seu e-mail",
   passwordLabel: "Senha",
   passwordPlaceholder: "Digite sua senha",
   login: "Entrar",

@@ -1,13 +1,21 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Utils } from '@/utils';
-import { Service, ServiceProps, api } from '@/services';
-import { HandleResponseProps } from '@/services/api';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { Utils } from "@/utils";
+import { Service, ServiceProps, api } from "@/services";
+import { HandleResponseProps } from "@/services/api";
 
-type LoginCredentialsRequest = ServiceProps['Auth']['CredentialsRequest'];
+type LoginCredentialsRequest = ServiceProps["Auth"]["CredentialsRequest"];
 
 interface AuthProviderProps {
   auth: AuthProps | null;
-  handleLogin: (credentials: LoginCredentialsRequest) => Promise<Omit<HandleResponseProps, 'data'>>;
+  handleLogin: (
+    credentials: LoginCredentialsRequest
+  ) => Promise<Omit<HandleResponseProps, "data">>;
   handleLogout: () => Promise<void>;
   hideValue: boolean;
   toggleHideValue: () => Promise<void>;
@@ -15,8 +23,8 @@ interface AuthProviderProps {
 }
 
 interface AuthProps {
-  user: ServiceProps['User']['Get']['user'];
-  revenue: ServiceProps['User']['Get']['revenue'];
+  user: ServiceProps["User"]["Get"]["user"];
+  revenue: ServiceProps["User"]["Get"]["revenue"];
   token: string;
   refresh: string;
 }
@@ -29,6 +37,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [auth, setAuth] = useState<AuthProps | null>(null);
   const [hideValue, setHideValue] = useState(true);
 
+  async function updateCurrentState(data: AuthProps) {
+    api.defaults.headers.Authorization = `Bearer ${data.token}`;
+    const { user, revenue } = await Service.User.get();
+    const currentAuth = {
+      user,
+      revenue,
+      token: data.token,
+      refresh: data.refresh,
+    };
+    await Storage.setItem(Storage.Keys.AUTH, currentAuth);
+    setAuth(currentAuth);
+  }
+
   useEffect(() => {
     try {
       setIsReady(false);
@@ -36,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setAuth(currentAuth ?? null);
 
         if (currentAuth) {
-          api.defaults.headers.Authorization = `Bearer ${currentAuth.token}`;
+          updateCurrentState(currentAuth);
         }
 
         Storage.getItem<boolean>(Storage.Keys.HIDE_VALUE).then((v) => {
@@ -48,7 +69,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  async function handleLogin(credentials: ServiceProps['Auth']['CredentialsRequest']) {
+  async function handleLogin(
+    credentials: ServiceProps["Auth"]["CredentialsRequest"]
+  ) {
     const { success, data, error } = await Service.Auth.login(credentials);
     if (success && data) {
       api.defaults.headers.Authorization = `Bearer ${data.access}`;
@@ -85,7 +108,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         handleLogout,
         hideValue,
         toggleHideValue,
-      }}>
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
