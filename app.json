@@ -10,7 +10,9 @@
     "experiments": {
       "tsconfigPaths": true
     },
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font"
+    ],
     "orientation": "portrait",
     "icon": "src/assets/images/cakto.png",
     "backgroundColor": "#00a168",
@@ -20,10 +22,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#00a168"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "br.com.cakto"
+      "bundleIdentifier": "br.com.cakto",
+      "appleTeamId": "8HQ52AJ83G"
     },
     "android": {
       "adaptiveIcon": {
