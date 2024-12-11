@@ -221,6 +221,7 @@ export function ResetPassword({
             variant="filled"
             textProps={{ color: theme.color.secondary.normal }}
             onPress={resetPassword}
+            isLoading={isLoading}
           />
         </View>
       </View>

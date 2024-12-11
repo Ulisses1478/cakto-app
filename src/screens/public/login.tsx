@@ -134,6 +134,7 @@ export function Login({ navigation }: RouteStackParams<"Login">) {
             variant="filled"
             textProps={{ color: theme.color.secondary.normal }}
             onPress={login}
+            isLoading={isLoading}
           />
           <Button.Base
             onPress={() =>
