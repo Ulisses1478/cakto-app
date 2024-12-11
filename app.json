@@ -5,18 +5,18 @@
     "version": "1.0.0",
     "newArchEnabled": true,
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "src/assets/images/cakto.png"
     },
     "experiments": {
       "tsconfigPaths": true
     },
     "plugins": ["expo-font"],
     "orientation": "portrait",
-    "icon": "src/assets/images/cakto-image.png",
+    "icon": "src/assets/images/cakto.png",
     "backgroundColor": "#00a168",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "src/assets/images/cakto-image.png",
+      "image": "src/assets/images/splash-screen.png",
       "resizeMode": "contain",
       "backgroundColor": "#00a168"
     },
@@ -27,7 +27,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "src/assets/images/cakto-image.png",
+        "foregroundImage": "src/assets/images/splash-screen.png",
         "backgroundColor": "#00a168"
       },
       "package": "com.cakto.production"
