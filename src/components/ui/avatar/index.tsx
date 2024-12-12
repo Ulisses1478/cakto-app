@@ -1,6 +1,6 @@
-import { theme } from "@/styles/theme";
-import { Text } from "../texts";
 import { Image, TouchableOpacity } from "react-native";
+import { Text } from "../texts";
+import { theme } from "@/styles/theme";
 
 interface AvatarProps {
   uri?: string | null;
@@ -21,7 +21,12 @@ export function Avatar(props: AvatarProps) {
       }}
     >
       {uri ? (
-        <Image source={{ uri }} height={theme.size.lg} width={theme.size.lg} />
+        <Image
+          source={{ uri }}
+          height={theme.size.lg}
+          width={theme.size.lg}
+          alt="Avatar do cliente"
+        />
       ) : (
         <Text.Base>{fallback || "C"}</Text.Base>
       )}

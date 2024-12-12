@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Alert, DimensionValue, Pressable, View } from "react-native";
+import {
+  Alert,
+  DimensionValue,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Image } from "@/assets/images";
 import { Avatar, Button, Template, Text } from "@/components/ui";
 import { ContextHook } from "@/contexts";
@@ -93,7 +99,12 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                 fontFamily: theme.font.family.regular,
                 lineHeight: 17,
               }}
-            >{`Olá, ${auth?.user?.firstName || ""}`}</Text.Base>
+            >
+              {Utils.Constants.Text.authenticated.home.welcome.replace(
+                "{name}",
+                auth?.user?.firstName || ""
+              )}
+            </Text.Base>
           </View>
           <View style={{ flexDirection: "row", gap: theme.spacing.nano }}>
             <Pressable
@@ -112,22 +123,51 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
           style={{
             backgroundColor: theme.color.secondary.normal,
             padding: theme.spacing.xxxs,
-            gap: theme.spacing.nano,
+            gap: theme.spacing.xxxs,
             borderRadius: theme.borderRadius.base,
           }}
         >
-          <Text.Base
-            style={{
-              fontSize: theme.font.size.xxs,
-              fontWeight: theme.font.weight.medium,
-              fontFamily: theme.font.family.medium,
-            }}
-          >
-            Saldo total
-          </Text.Base>
-          <Text.Base style={{ fontSize: theme.font.size.xl, letterSpacing: 4 }}>
-            {handleValue(totalValue, hideValue)}
-          </Text.Base>
+          <View style={{ gap: theme.spacing.nano }}>
+            <Text.Base
+              style={{
+                fontSize: theme.font.size.xxs,
+                fontWeight: theme.font.weight.medium,
+                fontFamily: theme.font.family.medium,
+              }}
+            >
+              {Utils.Constants.Text.authenticated.home.totalBalance}
+            </Text.Base>
+            <Text.Base
+              style={{ fontSize: theme.font.size.xl, letterSpacing: 4 }}
+            >
+              {handleValue(totalValue, hideValue)}
+            </Text.Base>
+          </View>
+
+          <View style={{ flexDirection: "row", gap: theme.spacing.nano }}>
+            <TouchableOpacity
+              style={{
+                paddingVertical: theme.spacing.nano,
+                paddingHorizontal: theme.spacing.base,
+                borderRadius: theme.borderRadius.pill,
+                gap: theme.spacing.nano,
+                backgroundColor: theme.color.white["024"],
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image.Pix />
+              <Text.Base
+                style={{
+                  fontSize: theme.font.size.xxs,
+                  fontWeight: theme.font.weight.regular,
+                  fontFamily: theme.font.family.regular,
+                }}
+              >
+                {Utils.Constants.Text.authenticated.home.buttons.pix}
+              </Text.Base>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View
@@ -138,7 +178,9 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
             borderRadius: theme.borderRadius.base,
           }}
         >
-          <Text.Base>Faturamento</Text.Base>
+          <Text.Base>
+            {Utils.Constants.Text.authenticated.home.revenue}
+          </Text.Base>
           <Text.Base
             style={{
               fontWeight: theme.font.weight.regular,
@@ -200,7 +242,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                 fontSize: theme.font.size.xxs,
               }}
             >
-              Saldo disponível
+              {Utils.Constants.Text.authenticated.home.availableBalance}
             </Text.Base>
             <Text.Base
               style={{
@@ -226,7 +268,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                 fontSize: theme.font.size.xxs,
               }}
             >
-              Saldo pendente
+              {Utils.Constants.Text.authenticated.home.pendingBalance}
             </Text.Base>
             <Text.Base
               style={{
