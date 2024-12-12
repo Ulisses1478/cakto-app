@@ -155,6 +155,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                 flexDirection: "row",
                 alignItems: "center",
               }}
+              onPress={() => navigation.navigate("PixHome")}
             >
               <Image.Pix />
               <Text.Base
