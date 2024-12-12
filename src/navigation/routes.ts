@@ -7,7 +7,7 @@ import {
   ConfirmResetCode,
   ResetPassword,
 } from "../screens/public";
-import { Home } from "@/screens/authenticated";
+import { Home, Pix } from "@/screens/authenticated";
 
 export type StackParams = {
   Splash: undefined;
@@ -17,6 +17,7 @@ export type StackParams = {
   ConfirmResetCode: { email: string };
   ResetPassword: { token: string; email?: string };
   Home: undefined;
+  PixHome: undefined;
 };
 
 type RouteStack<T> = Record<
@@ -58,6 +59,11 @@ export const ROUTES = Object.freeze({
   home: {
     name: "Home",
     component: Home,
+    protected: true,
+  },
+  pixHome: {
+    name: "PixHome",
+    component: Pix.Home,
     protected: true,
   },
 }) as RouteStack<StackParams>;
