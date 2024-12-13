@@ -157,7 +157,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
               }}
               onPress={() => navigation.navigate("PixHome")}
             >
-              <Image.Pix />
+              <Image.Pix.Icon />
               <Text.Base
                 style={{
                   fontSize: theme.font.size.xxs,
