@@ -34,7 +34,8 @@
     "react-native-svg": "15.8.0",
     "react-native-webview": "^13.12.5",
     "expo-constants": "~17.0.3",
-    "expo-dev-client": "~5.0.5"
+    "expo-dev-client": "~5.0.6",
+    "expo-linear-gradient": "~14.0.1"
   },
   "overrides": {
     "react-native-recaptcha-that-works": {
