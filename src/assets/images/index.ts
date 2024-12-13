@@ -5,6 +5,9 @@ import Warning from "./warning";
 import Success from "./success";
 import Notification from "./notification";
 import Pix from "./pix";
+import RealSign from "./real-sign";
+import Edit from "./edit";
+import Minus from "./minus";
 
 export const Image = Object.freeze({
   CaktoLogo,
@@ -14,6 +17,9 @@ export const Image = Object.freeze({
   Success,
   Notification,
   Pix,
+  RealSign,
+  Edit,
+  Minus,
 });
 
 export const BgImages = {
