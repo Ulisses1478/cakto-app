@@ -7,36 +7,28 @@ import { RouteStackParams } from "@/navigation/routes";
 import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
 
-const Texts = Utils.Constants.Text.authenticated.pix.home;
+const Texts = Utils.Constants.Text.authenticated.pix;
 
 const options = [
   {
-    label: Texts.options.send,
+    label: Texts.home.options.send,
     icon: <Image.Pix.Send />,
-    onPress: () => {
-      Alert.alert(Texts.options.send);
-    },
+    route: "",
   },
   {
-    label: Texts.options.receive,
+    label: Texts.home.options.receive,
     icon: <Image.Pix.Receive />,
-    onPress: () => {
-      Alert.alert(Texts.options.receive);
-    },
+    route: "PixReceive",
   },
   {
-    label: Texts.options.copyAndPaste,
+    label: Texts.home.options.copyAndPaste,
     icon: <Image.Pix.CopyAndPaste />,
-    onPress: () => {
-      Alert.alert(Texts.options.copyAndPaste);
-    },
+    route: "",
   },
   {
-    label: Texts.options.readQrCode,
+    label: Texts.home.options.readQrCode,
     icon: <Image.Pix.ReadQrCode />,
-    onPress: () => {
-      Alert.alert(Texts.options.readQrCode);
-    },
+    route: "",
   },
 ];
 
@@ -60,11 +52,11 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
               alignItems: "center",
               justifyContent: "center",
             }}
-            onPress={() => Alert.alert(Texts.myKeys)}
+            onPress={() => Alert.alert(Texts.home.myKeys)}
           >
             <Image.Pix.Key />
             <Text.Base style={{ textAlign: "center" }}>
-              {Texts.myKeys}
+              {Texts.home.myKeys}
             </Text.Base>
           </Pressable>
         ),
@@ -73,7 +65,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
       <View style={{ gap: theme.spacing.xxs, marginTop: theme.spacing.xs }}>
         <View style={{ gap: theme.spacing.nano }}>
           <Text.Base style={{ fontSize: theme.font.size.lg, lineHeight: 36 }}>
-            {Texts.title}
+            {Texts.home.title}
           </Text.Base>
           <Text.Base
             style={{
@@ -83,7 +75,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
               fontFamily: theme.font.family.regular,
             }}
           >
-            {Texts.description}
+            {Texts.home.description}
           </Text.Base>
         </View>
 
@@ -98,7 +90,14 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
         >
           {options.map((option, index) => (
             <TouchableOpacity
-              onPress={option.onPress}
+              onPress={() => {
+                if (!option.route) {
+                  Alert.alert(option.label);
+                  return;
+                }
+
+                navigation.navigate(option.route as never);
+              }}
               key={option.label}
               style={{
                 gap: theme.spacing.nano,

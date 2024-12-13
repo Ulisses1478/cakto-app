@@ -18,6 +18,7 @@ export type StackParams = {
   ResetPassword: { token: string; email?: string };
   Home: undefined;
   PixHome: undefined;
+  PixReceive: undefined;
 };
 
 type RouteStack<T> = Record<
@@ -64,6 +65,11 @@ export const ROUTES = Object.freeze({
   pixHome: {
     name: "PixHome",
     component: Pix.Home,
+    protected: true,
+  },
+  pixReceive: {
+    name: "PixReceive",
+    component: Pix.Receive,
     protected: true,
   },
 }) as RouteStack<StackParams>;

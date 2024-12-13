@@ -1,4 +1,5 @@
 export const pix = {
+  randomKey: "Chave aleatória",
   home: {
     title: "Área Pix",
     description:
@@ -9,7 +10,14 @@ export const pix = {
       copyAndPaste: "Copia e Cola",
       readQrCode: "Ler QR Code",
     },
-    randomKey: "Chave aleatória",
     myKeys: "Minhas Chaves PIX",
+  },
+  receive: {
+    title: "Receber Pix",
+    customValue: "Personalizar valor",
+    buttons: {
+      shareQrCode: "Compartilhar QR code",
+      shareCopyAndPaste: "Compartilhar Pix Copia e Cola",
+    },
   },
 };

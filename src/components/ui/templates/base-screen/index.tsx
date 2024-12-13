@@ -29,6 +29,9 @@ function handleFlexView(canGoBack: boolean, isFocused: boolean) {
   return flex;
 }
 
+export const STATUS_BAR_HEIGHT = Constants.statusBarHeight;
+export const BACK_BUTTON_HEIGHT = STATUS_BAR_HEIGHT + theme.spacing.xxs;
+
 // TODO: Create a listener for keyboard open/close
 export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
   const {
@@ -88,7 +91,7 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
               onPress={goBack}
               style={{
                 position: "absolute",
-                top: Constants.statusBarHeight + theme.spacing.xxs,
+                top: BACK_BUTTON_HEIGHT,
                 left: theme.spacing.xxs,
               }}
             />
