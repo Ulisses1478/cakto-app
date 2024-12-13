@@ -1,3 +1,4 @@
+import * as Clipboard from "expo-clipboard";
 import { Alert, Pressable, TouchableOpacity, View } from "react-native";
 
 import { Image } from "@/assets/images";
@@ -38,6 +39,8 @@ const options = [
     },
   },
 ];
+
+const mock_pix_key = "d123123asdasdqweqws2e";
 
 export function Home({ navigation }: RouteStackParams<"PixHome">) {
   return (
@@ -149,7 +152,8 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
           </View>
 
           <TouchableOpacity
-            onPress={() => Alert.alert(Texts.randomKey)}
+            // TODO: Colocar feedback
+            onPress={() => Clipboard.setStringAsync(mock_pix_key)}
             style={{
               padding: theme.spacing.base,
               borderRadius: theme.borderRadius.sm,
@@ -179,7 +183,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
                 fontFamily: theme.font.family.regular,
               }}
             >
-              d123123asdasdqweqwe
+              {mock_pix_key}
             </Text.Base>
           </TouchableOpacity>
         </View>
