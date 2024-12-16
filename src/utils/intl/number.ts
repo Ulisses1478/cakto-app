@@ -24,7 +24,12 @@ function formatToThousands(value?: number) {
   }k`;
 }
 
+function getOnlyNumbers(value?: string) {
+  return value?.replace(/\D/g, "") || "";
+}
+
 export const Number = Object.freeze({
   formatCurrency,
   formatToThousands,
+  getOnlyNumbers,
 });
