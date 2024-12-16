@@ -1,7 +1,13 @@
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { StyleProp, ScrollView, FlexStyle } from "react-native";
+import {
+  StyleProp,
+  ScrollView,
+  FlexStyle,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { TemplateBaseProps } from "./types";
@@ -117,25 +123,26 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
     );
   }
 
-  return (
-    <>
-      {asBackgroundImage ? (
-        <LinearGradient
-          style={{ flex: 1 }}
-          colors={["#000000", "#00A168", "#1a202c"]}
-          start={{ x: -3.5, y: 3.5 }}
-          end={{
-            x: 1,
-            y: 0.8,
-          }}
-        >
-          {wrapper()}
-        </LinearGradient>
-      ) : (
-        wrapper()
-      )}
-    </>
+  const WithLinearBackground = (
+    <LinearGradient
+      style={{ flex: 1 }}
+      colors={["#000000", "#00A168", "#1a202c"]}
+      start={{ x: -3.5, y: 3.5 }}
+      end={{
+        x: 1,
+        y: 0.8,
+      }}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        {wrapper()}
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
+
+  return <>{asBackgroundImage ? WithLinearBackground : wrapper()}</>;
 }
 
 // FIXME: Aguardando cliente definir para deixar o background como imagem ou linear gradient

@@ -82,6 +82,7 @@ export function Receive({ navigation }: RouteStackParams<"PixReceive">) {
             borderColor: theme.color.white["024"],
             borderRadius: theme.borderRadius.sm,
           }}
+          onPress={() => navigation.navigate("PixReceiveCustomValue")}
         >
           <View
             style={{

@@ -20,4 +20,13 @@ export const pix = {
       shareCopyAndPaste: "Compartilhar Pix Copia e Cola",
     },
   },
+  customValue: {
+    title: "Criar QR Code",
+    description: "Valor a receber (opcional)",
+    information:
+      "Caso você não informe o valor, ele será\ndefinido por quem for pagar o QR Code.",
+    buttons: {
+      continue: "Continuar",
+    },
+  },
 };

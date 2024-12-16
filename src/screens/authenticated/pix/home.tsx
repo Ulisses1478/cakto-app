@@ -6,6 +6,7 @@ import { Template, Text } from "@/components/ui";
 import { RouteStackParams } from "@/navigation/routes";
 import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
+import { BACK_BUTTON_HEIGHT } from "@/components/ui/templates/base-screen";
 
 const Texts = Utils.Constants.Text.authenticated.pix;
 
@@ -62,7 +63,12 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
         ),
       }}
     >
-      <View style={{ gap: theme.spacing.xxs, marginTop: theme.spacing.xs }}>
+      <View
+        style={{
+          gap: theme.spacing.xxs,
+          marginTop: BACK_BUTTON_HEIGHT + theme.spacing.xs,
+        }}
+      >
         <View style={{ gap: theme.spacing.nano }}>
           <Text.Base style={{ fontSize: theme.font.size.lg, lineHeight: 36 }}>
             {Texts.home.title}
