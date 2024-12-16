@@ -50,6 +50,9 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
       contentContainerStyle: {},
       style: {},
     },
+    keyboardAvoindgViewProps = {
+      style: {},
+    },
     canGoBack = false,
     goBack = null,
     keyboardIsOpen = false,
@@ -123,6 +126,9 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
     );
   }
 
+  const { style: keyboardAvoidingViewStyle = {}, ...keyboardAvoidingViewRest } =
+    keyboardAvoindgViewProps;
+
   const WithLinearBackground = (
     <LinearGradient
       style={{ flex: 1 }}
@@ -135,7 +141,9 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+        // @ts-expect-error
+        style={{ flex: 1, ...keyboardAvoidingViewStyle }}
+        {...keyboardAvoidingViewRest}
       >
         {wrapper()}
       </KeyboardAvoidingView>
