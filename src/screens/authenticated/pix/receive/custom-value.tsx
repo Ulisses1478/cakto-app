@@ -8,7 +8,8 @@ import { RouteStackParams } from "@/navigation/routes";
 import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
 
-const handleCurrency = Utils.Intl.Number.formatCurrency;
+const IntlNumber = Utils.Intl.Number;
+const handleCurrency = IntlNumber.formatCurrency;
 const Texts = Utils.Constants.Text.authenticated.pix;
 
 export function CustomValue({
@@ -53,7 +54,11 @@ export function CustomValue({
             </Flex>
 
             <Button.Base
-              onPress={() => console.log("Continuar")}
+              onPress={() =>
+                navigation.navigate("PixReceiveConfirmation", {
+                  value: IntlNumber.getOnlyNumbers(value),
+                })
+              }
               title={Texts.customValue.buttons.continue}
               style={{ backgroundColor: theme.color.secondary.normal }}
             />
@@ -96,7 +101,7 @@ export function CustomValue({
             value={value}
             onChangeText={(t) => {
               // TODO: ajustar a aparição de 3 decimais após a virgula
-              const number = t.replace(/\D/g, "");
+              const number = IntlNumber.getOnlyNumbers(t);
               setValue(
                 handleCurrency(Number(number) / 100, {
                   minimumFractionDigits: 2,
@@ -106,8 +111,6 @@ export function CustomValue({
             maxLength={17}
             placeholderTextColor={theme.color.secondary.normal}
             keyboardType="number-pad"
-            keyboardAppearance="dark"
-            returnKeyType="done"
             autoFocus
           />
           <Text.Base
