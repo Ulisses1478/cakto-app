@@ -1,14 +1,15 @@
-import { theme } from "@/styles/theme";
 import React from "react";
-import { Text, TextStyle } from "react-native";
+import { Text, TextProps as RNTextProps, TextStyle } from "react-native";
 
-interface TextProps {
+import { theme } from "@/styles/theme";
+
+interface TextProps extends Omit<RNTextProps, "style" | "children"> {
   style?: TextStyle;
   children: string | React.ReactNode;
 }
 
 export function Base(props: TextProps) {
-  const { style } = props;
+  const { style, ...rest } = props;
   return (
     <Text
       style={{
@@ -17,6 +18,7 @@ export function Base(props: TextProps) {
         fontSize: theme.font.size.xs,
         ...style,
       }}
+      {...rest}
     >
       {props.children}
     </Text>

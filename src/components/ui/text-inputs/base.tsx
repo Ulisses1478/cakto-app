@@ -19,6 +19,11 @@ interface TextInputProps extends RNTextInputProps {
     style?: TextStyle;
     placeholderTextColor?: string;
   };
+  bottomRightProps?: {
+    style?: TextStyle;
+    onPress?: () => void;
+    text?: string;
+  };
 }
 
 function dynamicStyles(
@@ -55,6 +60,7 @@ function TextInputBase(props: TextInputProps, ref: any) {
     secureTextEntry = false,
     onFocus,
     onBlur,
+    bottomRightProps,
     ...rest
   } = props;
 
@@ -77,7 +83,7 @@ function TextInputBase(props: TextInputProps, ref: any) {
   }
 
   return (
-    <View style={{ gap: theme.spacing.nano }}>
+    <View style={{ gap: theme.spacing.quarck }}>
       {label && (
         <Text.Base style={{ fontSize: theme.font.size.xxs, ...textProps }}>
           {label}
@@ -111,8 +117,27 @@ function TextInputBase(props: TextInputProps, ref: any) {
           placeholderTextColor={placeholderTextColor}
           {...(secureTextEntry ? basePasswordProps : {})}
           secureTextEntry={secureTextEntry && !showPassword}
+          {...(rest.keyboardType === "number-pad"
+            ? { returnKeyType: "done" }
+            : {})}
+          keyboardAppearance="dark"
           {...rest}
         />
+        {bottomRightProps?.text && (
+          <Text.Base
+            style={{
+              color: theme.color.white["064"],
+              fontSize: theme.font.size.xxxs - 2,
+              fontFamily: theme.font.family.regular,
+              fontWeight: theme.font.weight.regular,
+              textAlign: "right",
+              ...bottomRightProps.style,
+            }}
+            onPress={bottomRightProps.onPress}
+          >
+            {bottomRightProps.text}
+          </Text.Base>
+        )}
         {secureTextEntry && (
           <Pressable
             onPress={() => setShowPassword(!showPassword)}

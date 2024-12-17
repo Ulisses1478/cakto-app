@@ -1,12 +1,21 @@
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { StyleProp, ScrollView, FlexStyle } from "react-native";
+import {
+  StyleProp,
+  ScrollView,
+  FlexStyle,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { TemplateBaseProps } from "./types";
 import { Button } from "../../buttons";
+import { Flex } from "../../flex";
 import { Modal } from "../../modal";
+import { Text } from "../../texts";
 
 import { theme } from "@/styles/theme";
 
@@ -29,6 +38,9 @@ function handleFlexView(canGoBack: boolean, isFocused: boolean) {
   return flex;
 }
 
+export const STATUS_BAR_HEIGHT = Constants.statusBarHeight;
+export const BACK_BUTTON_HEIGHT = STATUS_BAR_HEIGHT + theme.spacing.xxs;
+
 // TODO: Create a listener for keyboard open/close
 export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
   const {
@@ -41,9 +53,13 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
       contentContainerStyle: {},
       style: {},
     },
+    keyboardAvoindgViewProps = {
+      style: {},
+    },
     canGoBack = false,
     goBack = null,
     keyboardIsOpen = false,
+    headerProps,
     ...rest
   } = props;
 
@@ -84,14 +100,35 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
           {...rest}
         >
           {canGoBack && typeof goBack === "function" && !keyboardIsOpen && (
-            <Button.Back
-              onPress={goBack}
+            <Flex
               style={{
                 position: "absolute",
-                top: Constants.statusBarHeight + theme.spacing.xxs,
+                top: STATUS_BAR_HEIGHT,
                 left: theme.spacing.xxs,
+                justifyContent: "space-between",
+                width: theme.size.full,
               }}
-            />
+            >
+              <Button.Back onPress={goBack} />
+              {headerProps?.title && (
+                <Text.Base
+                  style={{
+                    flex: 1,
+                    textAlign: "center",
+                    fontSize: theme.font.size.xxs,
+                    fontFamily: theme.font.family.semiBold,
+                    fontWeight: theme.font.weight.semiBold,
+                    left: -theme.size.quarck + 2,
+                  }}
+                >
+                  {headerProps.title}
+                </Text.Base>
+              )}
+              {headerProps?.rightIcon && headerProps.rightIcon}
+              {headerProps?.title && !headerProps?.rightIcon && (
+                <View style={{ width: 24 }} />
+              )}
+            </Flex>
           )}
 
           {scrollViewProps?.wrapWithScrollView ? (
@@ -114,25 +151,31 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
     );
   }
 
-  return (
-    <>
-      {asBackgroundImage ? (
-        <LinearGradient
-          style={{ flex: 1 }}
-          colors={["#000000", "#00A168", "#1a202c"]}
-          start={{ x: -3.5, y: 3.5 }}
-          end={{
-            x: 1,
-            y: 0.8,
-          }}
-        >
-          {wrapper()}
-        </LinearGradient>
-      ) : (
-        wrapper()
-      )}
-    </>
+  const { style: keyboardAvoidingViewStyle = {}, ...keyboardAvoidingViewRest } =
+    keyboardAvoindgViewProps;
+
+  const WithLinearBackground = (
+    <LinearGradient
+      style={{ flex: 1 }}
+      colors={["#000000", "#00A168", "#1a202c"]}
+      start={{ x: -3.5, y: 3.5 }}
+      end={{
+        x: 1,
+        y: 0.8,
+      }}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        // @ts-expect-error
+        style={{ flex: 1, ...keyboardAvoidingViewStyle }}
+        {...keyboardAvoidingViewRest}
+      >
+        {wrapper()}
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
+
+  return <>{asBackgroundImage ? WithLinearBackground : wrapper()}</>;
 }
 
 // FIXME: Aguardando cliente definir para deixar o background como imagem ou linear gradient

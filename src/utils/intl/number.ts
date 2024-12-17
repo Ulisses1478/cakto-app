@@ -1,8 +1,12 @@
-function formatCurrency(value?: number) {
+function formatCurrency(
+  value?: number,
+  options?: Partial<Intl.NumberFormatOptions>
+) {
   value = value || 0;
   return Intl.NumberFormat("pt-BR", {
     currency: "BRL",
     style: "currency",
+    ...options,
   }).format(value);
 }
 
@@ -20,7 +24,12 @@ function formatToThousands(value?: number) {
   }k`;
 }
 
+function getOnlyNumbers(value?: string) {
+  return value?.replace(/\D/g, "") || "";
+}
+
 export const Number = Object.freeze({
   formatCurrency,
   formatToThousands,
+  getOnlyNumbers,
 });
