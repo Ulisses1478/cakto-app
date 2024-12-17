@@ -1,5 +1,5 @@
 import * as Clipboard from "expo-clipboard";
-import { Alert, TouchableOpacity, View } from "react-native";
+import { Alert, TouchableOpacity, View, Share } from "react-native";
 
 import { Image } from "@/assets/images";
 import { Button, Template, Text } from "@/components/ui";
@@ -108,7 +108,9 @@ export function Receive({ navigation }: RouteStackParams<"PixReceive">) {
         <Button.Base
           variant="unfilled"
           title={Texts.receive.buttons.shareCopyAndPaste}
-          onPress={() => Alert.alert("Compartilhar Pix Copia e Cola")}
+          onPress={() =>
+            Share.share({ message: "Minha chave Pix\n" + mock_pix_key })
+          }
         />
       </View>
     </Template.Base>

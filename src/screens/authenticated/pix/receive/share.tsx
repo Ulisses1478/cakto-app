@@ -1,5 +1,5 @@
 import * as Clipboard from "expo-clipboard";
-import { Alert, TouchableOpacity, View } from "react-native";
+import { Alert, TouchableOpacity, View, Share as RNShare } from "react-native";
 
 import { Image } from "@/assets/images";
 import { Button, Template, Text } from "@/components/ui";
@@ -113,7 +113,9 @@ export function Share({
         <Button.Base
           variant="unfilled"
           title={Texts.receive.buttons.shareCopyAndPaste}
-          onPress={() => Alert.alert("Compartilhar Pix Copia e Cola")}
+          onPress={() =>
+            RNShare.share({ message: "Minha chave Pix\n" + mock_pix_key })
+          }
         />
       </View>
     </Template.Base>
