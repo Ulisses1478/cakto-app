@@ -44,4 +44,13 @@ export const pix = {
       continue: "Continuar",
     },
   },
+  send: {
+    home: {
+      title: "Qual o valor você quer enviar?",
+      description: "Seu saldo atual é: ",
+      buttons: {
+        continue: "Continuar",
+      },
+    },
+  },
 };
