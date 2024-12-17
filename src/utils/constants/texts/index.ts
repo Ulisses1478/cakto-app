@@ -4,6 +4,7 @@ import {
   forgotPassword,
   confirmResetCode,
   resetPassword,
+  authenticated,
 } from "./screens";
 
 export const Text = Object.freeze({
@@ -12,4 +13,5 @@ export const Text = Object.freeze({
   forgotPassword,
   confirmResetCode,
   resetPassword,
+  authenticated,
 });

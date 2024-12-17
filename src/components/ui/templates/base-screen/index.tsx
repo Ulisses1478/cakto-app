@@ -1,16 +1,14 @@
-import React from "react";
-import { theme } from "@/styles/theme";
-import {
-  ImageBackground,
-  StyleProp,
-  ScrollView,
-  FlexStyle,
-} from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
-import { Modal } from "../../modal";
-import { Button } from "../../buttons";
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { StyleProp, ScrollView, FlexStyle } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
 import { TemplateBaseProps } from "./types";
+import { Button } from "../../buttons";
+import { Modal } from "../../modal";
+
+import { theme } from "@/styles/theme";
 
 const BGImages = {
   home: require("@/assets/images/bg-home.png"),
@@ -74,7 +72,7 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
       <SafeAreaProvider>
         <SafeAreaView
           style={{
-            backgroundColor: !!asBackgroundImage
+            backgroundColor: asBackgroundImage
               ? "transparent"
               : theme.color.secondary.normal,
             flex: 1,
@@ -118,21 +116,34 @@ export function Base(props: TemplateBaseProps<keyof typeof BGImages>) {
 
   return (
     <>
-      {!!asBackgroundImage ? (
-        <ImageBackground
-          style={{
-            flex: 1,
-            height: theme.size.full,
-            width: theme.size.full,
+      {asBackgroundImage ? (
+        <LinearGradient
+          style={{ flex: 1 }}
+          colors={["#000000", "#00A168", "#1a202c"]}
+          start={{ x: -3.5, y: 3.5 }}
+          end={{
+            x: 1,
+            y: 0.8,
           }}
-          resizeMode="cover"
-          source={BGImages[asBackgroundImage.source]}
         >
           {wrapper()}
-        </ImageBackground>
+        </LinearGradient>
       ) : (
         wrapper()
       )}
     </>
   );
 }
+
+// FIXME: Aguardando cliente definir para deixar o background como imagem ou linear gradient
+// <ImageBackground
+//   style={{
+//     flex: 1,
+//     height: theme.size.full,
+//     width: theme.size.full,
+//   }}
+//   resizeMode="cover"
+//   source={BGImages[asBackgroundImage.source]}
+// >
+//   {wrapper()}
+// </ImageBackground>
