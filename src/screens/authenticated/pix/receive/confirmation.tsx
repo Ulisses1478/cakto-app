@@ -41,6 +41,9 @@ export function Confirmation({
       keyboardAvoindgViewProps={{
         behavior: undefined,
       }}
+      headerProps={{
+        title: Texts.receive.confirmation.title,
+      }}
       scrollViewProps={{
         wrapWithScrollView: true,
         footer: (
@@ -58,7 +61,7 @@ export function Confirmation({
       <View
         style={{
           gap: theme.spacing.xxs,
-          marginTop: BACK_BUTTON_HEIGHT + theme.spacing.xs,
+          marginTop: BACK_BUTTON_HEIGHT,
           flex: 1,
           alignItems: "center",
           width: theme.size.full,

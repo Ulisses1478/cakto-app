@@ -23,11 +23,14 @@ export function Receive({ navigation }: RouteStackParams<"PixReceive">) {
       scrollViewProps={{
         wrapWithScrollView: true,
       }}
+      headerProps={{
+        title: Texts.receive.title,
+      }}
     >
       <View
         style={{
           gap: theme.spacing.xxs,
-          marginTop: BACK_BUTTON_HEIGHT + theme.spacing.xs,
+          marginTop: BACK_BUTTON_HEIGHT,
           flex: 1,
           alignItems: "center",
           width: theme.size.full,
@@ -40,10 +43,6 @@ export function Receive({ navigation }: RouteStackParams<"PixReceive">) {
             alignItems: "center",
           }}
         >
-          <Text.Base style={{ fontSize: theme.font.size.lg }}>
-            {Texts.receive.title}
-          </Text.Base>
-
           <Image.Pix.MockQrCode />
 
           <TouchableOpacity

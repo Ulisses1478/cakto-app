@@ -24,4 +24,8 @@ export interface TemplateBaseProps<T = undefined> extends SafeAreaViewProps {
   canGoBack?: boolean;
   keyboardAvoindgViewProps?: KeyboardAvoidingViewProps;
   goBack?: () => void | null;
+  headerProps?: {
+    title?: string;
+    rightIcon?: React.ReactNode;
+  };
 }

@@ -23,6 +23,9 @@ export function CustomValue({
       }}
       canGoBack={navigation.canGoBack()}
       goBack={() => navigation.goBack()}
+      headerProps={{
+        title: Texts.customValue.title,
+      }}
       scrollViewProps={{
         wrapWithScrollView: true,
         footer: (
@@ -69,7 +72,7 @@ export function CustomValue({
       <View
         style={{
           gap: theme.spacing.xxs,
-          marginTop: BACK_BUTTON_HEIGHT + theme.spacing.xs,
+          marginTop: BACK_BUTTON_HEIGHT,
           flex: 1,
           alignItems: "center",
           width: theme.size.full,
@@ -83,10 +86,6 @@ export function CustomValue({
             alignItems: "center",
           }}
         >
-          <Text.Base style={{ fontSize: theme.font.size.lg }}>
-            {Texts.customValue.title}
-          </Text.Base>
-
           <TextInput.Base
             style={{
               fontSize: theme.font.size.lg,

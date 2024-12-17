@@ -49,7 +49,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
     >
       <View
         style={{
-          marginTop: BACK_BUTTON_HEIGHT + theme.spacing.xs,
+          marginTop: BACK_BUTTON_HEIGHT,
           justifyContent: "space-between",
           gap: theme.spacing.xxs,
         }}
