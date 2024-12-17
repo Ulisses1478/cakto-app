@@ -21,6 +21,7 @@ export type StackParams = {
   PixReceive: undefined;
   PixReceiveCustomValue: undefined;
   PixReceiveConfirmation: { value?: string };
+  PixReceiveShare: { value?: string };
 };
 
 type RouteStack<T> = Record<
@@ -82,6 +83,11 @@ export const ROUTES = Object.freeze({
   pixReceiveConfirmation: {
     name: "PixReceiveConfirmation",
     component: Pix.Receive.Confirmation,
+    protected: true,
+  },
+  pixReceiveShare: {
+    name: "PixReceiveShare",
+    component: Pix.Receive.Share,
     protected: true,
   },
 }) as RouteStack<StackParams>;

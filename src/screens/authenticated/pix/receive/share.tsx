@@ -8,11 +8,19 @@ import { RouteStackParams } from "@/navigation/routes";
 import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
 
+const IntlNumber = Utils.Intl.Number;
+const handleCurrency = IntlNumber.formatCurrency;
 const Texts = Utils.Constants.Text.authenticated.pix;
-
 const mock_pix_key = "29d2fdda-76b8-4cd4-820e-39b50103a1f4";
 
-export function Receive({ navigation }: RouteStackParams<"PixReceive">) {
+export function Share({
+  navigation,
+  route,
+}: RouteStackParams<"PixReceiveShare">) {
+  const unparsedValue = Number(route.params?.value) || 0;
+  const value = handleCurrency(unparsedValue / 100);
+  const hasValidValue = unparsedValue > 0;
+
   return (
     <Template.Base
       asBackgroundImage={{
@@ -25,6 +33,14 @@ export function Receive({ navigation }: RouteStackParams<"PixReceive">) {
       }}
       headerProps={{
         title: Texts.receive.title,
+        rightIcon: (
+          <TouchableOpacity
+            style={{ zIndex: 1 }}
+            onPress={() => navigation.popTo("Home")}
+          >
+            <Image.Home />
+          </TouchableOpacity>
+        ),
       }}
     >
       <View
@@ -69,35 +85,24 @@ export function Receive({ navigation }: RouteStackParams<"PixReceive">) {
               </Text.Base>
             </Text.Base>
           </TouchableOpacity>
+          {hasValidValue && (
+            <View style={{ gap: theme.spacing.quarck, alignItems: "center" }}>
+              <Text.Base style={{ fontSize: theme.font.size.lg }}>
+                {value}
+              </Text.Base>
+              <Text.Base
+                style={{
+                  color: theme.color.white["064"],
+                  fontSize: theme.font.size.xxxs - 2,
+                  fontFamily: theme.font.family.regular,
+                  fontWeight: theme.font.weight.regular,
+                }}
+              >
+                {Texts.receive.confirmation.descriptionWithValue}
+              </Text.Base>
+            </View>
+          )}
         </View>
-        <Image.Minus />
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: theme.size.full,
-            padding: theme.spacing.xxxs,
-            borderWidth: theme.borderWidth.hairline,
-            borderColor: theme.color.white["024"],
-            borderRadius: theme.borderRadius.sm,
-          }}
-          onPress={() => navigation.navigate("PixReceiveCustomValue")}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: theme.spacing.base,
-            }}
-          >
-            <Image.Edit />
-            <Text.Base>{Texts.receive.customValue}</Text.Base>
-          </View>
-          <Image.Chevron.Right
-            path={{ stroke: theme.color.secondary.normal }}
-          />
-        </TouchableOpacity>
       </View>
       <View style={{ gap: theme.spacing.base }}>
         <Button.Base

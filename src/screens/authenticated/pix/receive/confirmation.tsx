@@ -48,7 +48,11 @@ export function Confirmation({
         wrapWithScrollView: true,
         footer: (
           <Button.Base
-            onPress={() => console.log("Continuar")}
+            onPress={() =>
+              navigation.navigate("PixReceiveShare", {
+                value: route.params.value,
+              })
+            }
             title={buttonTitle}
             style={{
               backgroundColor: theme.color.secondary.normal,
