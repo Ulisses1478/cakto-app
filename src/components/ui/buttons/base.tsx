@@ -5,7 +5,9 @@ import {
   ButtonProps as RNButtonProps,
   ActivityIndicator,
 } from "react-native";
+
 import { Text } from "../texts";
+
 import { theme } from "@/styles/theme";
 
 const baseButtonProps = {
@@ -62,13 +64,16 @@ interface ButtonProps extends RNButtonProps {
 export function Base(props: ButtonProps) {
   const {
     title,
-    style,
+    style: unparsedStyle,
     textProps,
     variant = "filled",
     isLoading = false,
+    disabled = false,
     ...rest
   } = props;
 
+  const style = unparsedStyle || {};
+  style.opacity = style.opacity || isLoading || disabled ? 0.5 : 1;
   const buttonProps = getStyleByVariant(variant, style);
 
   if (variant === "unfilled" && textProps?.color) {
@@ -76,7 +81,11 @@ export function Base(props: ButtonProps) {
   }
 
   return (
-    <TouchableOpacity disabled={isLoading} {...rest} style={buttonProps}>
+    <TouchableOpacity
+      disabled={isLoading || disabled}
+      {...rest}
+      style={buttonProps}
+    >
       <Text.Base style={textProps}>{title}</Text.Base>
       {isLoading && (
         <ActivityIndicator

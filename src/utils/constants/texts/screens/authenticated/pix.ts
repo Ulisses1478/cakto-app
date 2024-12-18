@@ -51,6 +51,21 @@ export const pix = {
       buttons: {
         continue: "Continuar",
       },
+      warning: {
+        title: "Oops!",
+        description: "O valor deve ser maior do que 0!",
+        onSubmitText: "Digitar outro valor",
+      },
+    },
+    informPix: {
+      title: "Para quem você quer enviar\n{value}?",
+      description:
+        "Escolha um dos contatos da sua lista, ou envie para um novo contato digitando a chave Pix.",
+      invalidPix: "Por favor, digite uma chave Pix válida.",
+      buttons: {
+        sendTo: "Enviar para este {value}",
+        continue: "Continuar",
+      },
     },
   },
 };

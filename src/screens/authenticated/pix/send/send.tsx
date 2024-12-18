@@ -1,7 +1,15 @@
-import { useState } from "react";
-import { Alert, View } from "react-native";
+import { useRef, useState } from "react";
+import { Alert, Keyboard, View, TextInput as RNTextInput } from "react-native";
 
-import { Button, Flex, Template, Text, TextInput } from "@/components/ui";
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalProps,
+  Template,
+  Text,
+  TextInput,
+} from "@/components/ui";
 import { BACK_BUTTON_HEIGHT } from "@/components/ui/templates/base-screen";
 import { RouteStackParams } from "@/navigation/routes";
 import { theme } from "@/styles/theme";
@@ -12,8 +20,36 @@ const handleCurrency = IntlNumber.formatCurrency;
 const Texts = Utils.Constants.Text.authenticated.pix;
 const mock_total_value = Math.random() * 10 * 1000;
 
+const feedBackWarningProps = {
+  // title: Texts.send.home.warning.title,
+  description: Texts.send.home.warning.description,
+  onSubmitText: Texts.send.home.warning.onSubmitText,
+  scheme: "warning",
+} as ModalProps["BottomSheet"]["props"];
+
 export function Send({ navigation }: RouteStackParams<"PixSend">) {
   const [value, setValue] = useState(handleCurrency(0));
+  const inputRef = useRef<RNTextInput>(null);
+  const modalRef = useRef<ModalProps["BottomSheet"]["ref"]>(null);
+
+  function handleValue(value: string) {
+    Keyboard.dismiss();
+    const numbers = Number(IntlNumber.getOnlyNumbers(value));
+    if (numbers <= 0) {
+      modalRef.current?.onOpen(feedBackWarningProps);
+      return;
+    }
+
+    navigation.navigate("PixSendInformPix", {
+      value: IntlNumber.getOnlyNumbers(value),
+    });
+  }
+
+  feedBackWarningProps.onSubmit = () => {
+    modalRef.current?.onClose();
+    inputRef.current?.focus();
+  };
+
   return (
     <Template.Base
       asBackgroundImage={{
@@ -25,6 +61,12 @@ export function Send({ navigation }: RouteStackParams<"PixSend">) {
         wrapWithScrollView: true,
       }}
     >
+      <Modal.BottomSheet
+        ref={modalRef}
+        onCancel={() => {
+          inputRef.current?.focus();
+        }}
+      />
       <View
         style={{
           gap: theme.spacing.xxxs,
@@ -65,6 +107,7 @@ export function Send({ navigation }: RouteStackParams<"PixSend">) {
           </Flex>
         </View>
         <TextInput.Base
+          ref={inputRef}
           value={value}
           onChangeText={(text) => {
             const numbers = IntlNumber.getOnlyNumbers(text);
@@ -77,7 +120,10 @@ export function Send({ navigation }: RouteStackParams<"PixSend">) {
           placeholder="R$ 0,00"
           maxLength={17}
           keyboardType="number-pad"
-          style={{ width: theme.size.full }}
+          style={{
+            width: theme.size.full,
+          }}
+          autoFocus
         />
       </View>
       <View style={{ gap: theme.spacing.base }}>
@@ -87,7 +133,7 @@ export function Send({ navigation }: RouteStackParams<"PixSend">) {
             backgroundColor: theme.color.secondary.normal,
             marginBottom: theme.spacing.base,
           }}
-          onPress={() => Alert.alert("Continuar")}
+          onPress={() => handleValue(value)}
         />
       </View>
     </Template.Base>
