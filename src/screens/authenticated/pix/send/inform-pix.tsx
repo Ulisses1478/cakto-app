@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 
 import { Button, Template, Text, TextInput } from "@/components/ui";
 import { BACK_BUTTON_HEIGHT } from "@/components/ui/templates/base-screen";
@@ -169,7 +169,12 @@ export function InformPix({
             marginBottom: theme.spacing.base,
           }}
           disabled={error || !pix.type}
-          onPress={() => Alert.alert("Continuar")}
+          onPress={() =>
+            navigation.navigate("PixSendSelectBankAccount", {
+              value: IntlNumber.getOnlyNumbers(pixValue),
+              pixKey: pix.key,
+            })
+          }
         />
       </View>
     </Template.Base>

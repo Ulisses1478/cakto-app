@@ -67,5 +67,9 @@ export const pix = {
         continue: "Continuar",
       },
     },
+    SelectBankAccount: {
+      title: "Escolha para qual conta você quer enviar",
+      description: "Enviando",
+    },
   },
 };

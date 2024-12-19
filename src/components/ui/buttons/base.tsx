@@ -4,6 +4,7 @@ import {
   ViewStyle,
   ButtonProps as RNButtonProps,
   ActivityIndicator,
+  Keyboard,
 } from "react-native";
 
 import { Text } from "../texts";
@@ -69,6 +70,7 @@ export function Base(props: ButtonProps) {
     variant = "filled",
     isLoading = false,
     disabled = false,
+    onPress,
     ...rest
   } = props;
 
@@ -84,6 +86,14 @@ export function Base(props: ButtonProps) {
     <TouchableOpacity
       disabled={isLoading || disabled}
       {...rest}
+      onPress={(event) => {
+        if (typeof onPress === "function") {
+          onPress(event);
+          if (Keyboard.isVisible()) {
+            Keyboard.dismiss();
+          }
+        }
+      }}
       style={buttonProps}
     >
       <Text.Base style={textProps}>{title}</Text.Base>
