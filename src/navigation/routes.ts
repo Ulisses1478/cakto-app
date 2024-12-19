@@ -25,6 +25,11 @@ export type StackParams = {
   PixSend: undefined;
   PixSendInformPix: { value: string };
   PixSendSelectBankAccount: { value: string; pixKey: string };
+  PixSendConfirmation: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+  };
 };
 
 type RouteStack<T> = Record<
@@ -106,6 +111,11 @@ export const ROUTES = Object.freeze({
   pixSendSelectBankAccount: {
     name: "PixSendSelectBankAccount",
     component: Pix.Send.SelectBankAccount,
+    protected: true,
+  },
+  pixSendConfirmation: {
+    name: "PixSendConfirmation",
+    component: Pix.Send.Confirmation,
     protected: true,
   },
 }) as RouteStack<StackParams>;
