@@ -21,6 +21,7 @@ export const color = {
   },
   gray: {
     900: "rgba(19, 22, 26, 1)",
+    "700": "rgba(59,69,79,1)",
     "064": "rgba(22, 28, 36, 0.64)",
   },
 } as const;

@@ -83,6 +83,27 @@ export const pix = {
       buttons: {
         transfer: "Transferir {value}",
       },
+      modals: {
+        editValue: {
+          title: "Qual o valor que você quer enviar?",
+          description: "Seu saldo atual é: ",
+          warning: {
+            text: "Por favor, digite um valor maior que R$ 0,00.",
+          },
+          buttons: {
+            updateValue: "Atualizar valor",
+          },
+        },
+        editMessage: {
+          title: "Escreva uma mensagem",
+          description: "A mensagem irá aparecer para ",
+          subDescription: " no comprovante de transferência",
+          inputPlaceholder: "Digite sua mensagem aqui...",
+          buttons: {
+            saveMessage: "Salvar mensagem",
+          },
+        },
+      },
     },
   },
 };
