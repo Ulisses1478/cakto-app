@@ -67,9 +67,22 @@ export const pix = {
         continue: "Continuar",
       },
     },
-    SelectBankAccount: {
+    selectBankAccount: {
       title: "Escolha para qual conta você quer enviar",
       description: "Enviando",
+    },
+    confirmation: {
+      title: "Enviar",
+      edit: "Alterar",
+      to: "Para",
+      message: "Escrever uma mensagem",
+      cpf: "CPF",
+      bank: "Instituição",
+      agency: "Agência",
+      account: "Conta Corrente",
+      buttons: {
+        transfer: "Transferir {value}",
+      },
     },
   },
 };

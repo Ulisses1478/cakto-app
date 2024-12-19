@@ -8,6 +8,7 @@ import Pix from "./pix";
 import Edit from "./edit";
 import Minus from "./minus";
 import Home from "./home";
+import Chat from "./chat";
 
 export const Image = Object.freeze({
   CaktoLogo,
@@ -20,6 +21,7 @@ export const Image = Object.freeze({
   Edit,
   Minus,
   Home,
+  Chat,
 });
 
 export const BgImages = {

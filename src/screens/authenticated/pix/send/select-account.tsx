@@ -9,18 +9,22 @@ import { Utils } from "@/utils";
 
 const IntlNumber = Utils.Intl.Number;
 const handleCurrency = IntlNumber.formatCurrency;
-const Texts = Utils.Constants.Text.authenticated.pix.send.SelectBankAccount;
+const Texts = Utils.Constants.Text.authenticated.pix.send.selectBankAccount;
 
 const mock_receiver = "Jhon Doe";
 
+function generateRandomId() {
+  return String(Date.now() + Number(Math.random() * 1000));
+}
+
 const mock_accounts = [
-  { name: "Cakto" },
-  { name: "Banco do Brasil" },
-  { name: "Nubank" },
-  { name: "C6 Bank" },
-  { name: "Banco Inter" },
-  { name: "Itaú" },
-  { name: "Bradesco" },
+  { id: generateRandomId(), name: "Cakto" },
+  { id: generateRandomId(), name: "Banco do Brasil" },
+  { id: generateRandomId(), name: "Nubank" },
+  { id: generateRandomId(), name: "C6 Bank" },
+  { id: generateRandomId(), name: "Banco Inter" },
+  { id: generateRandomId(), name: "Itaú" },
+  { id: generateRandomId(), name: "Bradesco" },
 ];
 
 export function SelectBankAccount({
@@ -76,7 +80,7 @@ export function SelectBankAccount({
           >
             {mock_accounts.map((account) => (
               <TouchableOpacity
-                key={account.name}
+                key={account.id}
                 style={{
                   flexDirection: "row",
                   gap: theme.spacing.xxxs,
@@ -85,6 +89,13 @@ export function SelectBankAccount({
                   padding: theme.spacing.xxxs,
                   borderRadius: theme.borderRadius.sm,
                 }}
+                onPress={() =>
+                  navigation.navigate("PixSendConfirmation", {
+                    pixKey,
+                    value: IntlNumber.getOnlyNumbers(pixValue),
+                    bankAccount: account,
+                  })
+                }
               >
                 <Image.Pix.Icon24 />
                 <View style={{ gap: theme.spacing.quarck }}>
