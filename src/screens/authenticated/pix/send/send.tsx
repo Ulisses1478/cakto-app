@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Alert, Keyboard, View, TextInput as RNTextInput } from "react-native";
+import { Keyboard, View, TextInput as RNTextInput } from "react-native";
 
 import {
   Button,
@@ -21,7 +21,6 @@ const Texts = Utils.Constants.Text.authenticated.pix;
 const mock_total_value = Math.random() * 10 * 1000;
 
 const feedBackWarningProps = {
-  // title: Texts.send.home.warning.title,
   description: Texts.send.home.warning.description,
   onSubmitText: Texts.send.home.warning.onSubmitText,
   scheme: "warning",
