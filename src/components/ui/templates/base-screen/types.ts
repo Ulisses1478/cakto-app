@@ -1,4 +1,8 @@
-import { ScrollViewProps, ViewStyle } from "react-native";
+import {
+  KeyboardAvoidingViewProps,
+  ScrollViewProps,
+  ViewStyle,
+} from "react-native";
 import { SafeAreaViewProps } from "react-native-safe-area-context";
 
 export interface TemplateBaseProps<T = undefined> extends SafeAreaViewProps {
@@ -18,5 +22,10 @@ export interface TemplateBaseProps<T = undefined> extends SafeAreaViewProps {
     | null;
   keyboardIsOpen?: boolean;
   canGoBack?: boolean;
+  keyboardAvoindgViewProps?: KeyboardAvoidingViewProps;
   goBack?: () => void | null;
+  headerProps?: {
+    title?: string;
+    rightIcon?: React.ReactNode;
+  };
 }
