@@ -14,7 +14,7 @@ const options = [
   {
     label: Texts.home.options.send,
     icon: <Image.Pix.Send />,
-    route: "",
+    route: "PixSend",
   },
   {
     label: Texts.home.options.receive,
