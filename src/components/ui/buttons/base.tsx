@@ -60,6 +60,7 @@ interface ButtonProps extends RNButtonProps {
   textProps?: TextStyle;
   variant?: "filled" | "unfilled";
   isLoading?: boolean;
+  leftIcon?: React.ReactNode | null;
 }
 
 export function Base(props: ButtonProps) {
@@ -70,6 +71,7 @@ export function Base(props: ButtonProps) {
     variant = "filled",
     isLoading = false,
     disabled = false,
+    leftIcon = null,
     onPress,
     ...rest
   } = props;
@@ -96,6 +98,7 @@ export function Base(props: ButtonProps) {
       }}
       style={buttonProps}
     >
+      {leftIcon}
       <Text.Base style={textProps}>{title}</Text.Base>
       {isLoading && (
         <ActivityIndicator
