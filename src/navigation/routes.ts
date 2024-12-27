@@ -40,7 +40,12 @@ export type StackParams = {
 
 type RouteStack<T> = Record<
   string,
-  { name: keyof T; component: any; protected: boolean }
+  {
+    name: keyof T;
+    component: any;
+    protected: boolean;
+    gestureEnabled?: boolean;
+  }
 >;
 
 export const ROUTES = Object.freeze({
@@ -78,6 +83,7 @@ export const ROUTES = Object.freeze({
     name: "Home",
     component: Home,
     protected: true,
+    gestureEnabled: false,
   },
   pixHome: {
     name: "PixHome",
@@ -128,6 +134,7 @@ export const ROUTES = Object.freeze({
     name: "PixSendTypePassword",
     component: Pix.Send.TypePassword,
     protected: true,
+    gestureEnabled: false,
   },
 }) as RouteStack<StackParams>;
 

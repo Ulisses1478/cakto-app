@@ -35,8 +35,6 @@ export function TypePassword({
   const inputRefs = useRef<(RNTextInput | null)[]>([]);
   const [blockTime, setBlockTime] = useState({ minutes: "10", seconds: "00" });
 
-  console.log(blockTime);
-
   const goBack = () => {
     if (pinAttempts.value >= PIN_TRIES) {
       navigation.dispatch(
@@ -64,10 +62,15 @@ export function TypePassword({
 
   useEffect(() => {
     let interval: any = null;
-    if (isBlocked()) {
+    const minutes = IntlNumber.removeLeadingZeros(
+      IntlNumber.getOnlyNumbers(getRemainingTime().minutes)
+    );
+    const seconds = IntlNumber.removeLeadingZeros(
+      IntlNumber.getOnlyNumbers(getRemainingTime().seconds)
+    );
+    if (isBlocked() && (minutes || seconds)) {
       setBlockTime(getRemainingTime());
       interval = setInterval(() => {
-        console.log("OI???", getRemainingTime());
         const remaining = getRemainingTime();
         setBlockTime(remaining);
         if (!isBlocked()) {
@@ -143,7 +146,6 @@ export function TypePassword({
                   disabled={pinAttempts.value >= PIN_TRIES}
                   placeholder={inputRefs.current[index]?.isFocused() ? "" : "•"}
                   onChangeText={(value) => {
-                    if (isBlocked()) return;
                     const parsedValue = value.length > 1 ? value[1] : value;
                     pinRef.current[index] = parsedValue;
                     setPin("*,*,*,*");
@@ -168,7 +170,6 @@ export function TypePassword({
                           if (pinAttempts.value < PIN_TRIES) {
                             pinRef.current = [];
                             inputRefs.current[0]?.focus();
-                            // navigation.navigate("PixSend");
                           } else if (pinAttempts.value >= PIN_TRIES) {
                             inputRefs.current[index]?.blur();
                           }

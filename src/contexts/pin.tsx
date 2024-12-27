@@ -39,7 +39,10 @@ export function PinProvider({ children }: { children: ReactNode }) {
       Storage.Keys.PIN_TRIES
     );
     const parse = current ?? { value: 0, blockedAt: 0, unblockAt: 0 };
-    if (pinAttempts.unblockAt > 0 && Date.now() >= pinAttempts.unblockAt) {
+    if (
+      pinAttempts.unblockAt > pinAttempts.blockedAt &&
+      Date.now() >= pinAttempts.unblockAt
+    ) {
       parse.blockedAt = 0;
       parse.value = 0;
       parse.unblockAt = 0;
@@ -54,7 +57,6 @@ export function PinProvider({ children }: { children: ReactNode }) {
   }, []);
 
   function getRemainingTime() {
-    console.log(pinAttempts);
     if (pinAttempts.blockedAt === 0) {
       return { minutes: "0", seconds: "0" };
     }
@@ -67,8 +69,6 @@ export function PinProvider({ children }: { children: ReactNode }) {
 
     const formattedMinutes = String(minutes).padStart(2, "0");
     const formattedSeconds = String(seconds).padStart(2, "0");
-
-    console.log({ formattedMinutes, formattedSeconds });
 
     return { minutes: formattedMinutes, seconds: formattedSeconds };
   }
@@ -89,7 +89,10 @@ export function PinProvider({ children }: { children: ReactNode }) {
   }
 
   function isBlocked() {
-    if (pinAttempts.unblockAt > 0 && Date.now() >= pinAttempts.unblockAt) {
+    if (
+      pinAttempts.unblockAt > pinAttempts.blockedAt &&
+      Date.now() >= pinAttempts.unblockAt
+    ) {
       updateRetries({
         value: 0,
         blockedAt: 0,

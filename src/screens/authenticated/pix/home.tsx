@@ -169,7 +169,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
               </View>
               <Text.Base
                 style={{
-                  fontSize: theme.font.size.xxs,
+                  fontSize: theme.font.size.xxxs,
                   fontWeight: theme.font.weight.regular,
                   fontFamily: theme.font.family.regular,
                 }}

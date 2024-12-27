@@ -37,7 +37,10 @@ export default function RootStack() {
                 key={route.name}
                 name={route.name}
                 component={route.component}
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: route.gestureEnabled ?? true,
+                }}
               />
             ))}
           </Stack.Navigator>
