@@ -26,7 +26,7 @@ export function Confirmation({
 }: RouteStackParams<"PixSendConfirmation">) {
   const unparsedValue = Number(route.params?.value) || 0;
   const unparsedPixValue = handleCurrency(unparsedValue / 100);
-  // const pixKey = route.params.pixKey;
+  const pixKey = route.params.pixKey;
   const bankAccount = route.params.bankAccount;
   const [value, setValue] = useState(unparsedPixValue);
   const [pixValue, setPixValue] = useState(unparsedPixValue);
@@ -151,6 +151,14 @@ export function Confirmation({
         wrapWithScrollView: true,
         footer: (
           <Button.Base
+            onPress={() =>
+              navigation.navigate("PixSendTypePassword", {
+                pixKey,
+                value: IntlNumber.getOnlyNumbers(pixValue),
+                message,
+                bankAccount,
+              })
+            }
             title={Texts.buttons.transfer.replace("{value}", pixValue)}
             style={{ backgroundColor: theme.color.secondary.normal }}
           />

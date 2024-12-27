@@ -105,5 +105,19 @@ export const pix = {
         },
       },
     },
+    typePassword: {
+      title: "Digite sua senha",
+      description: "Essa é a senha de 4 digitos do seu cartão Cakto.",
+      warning: {
+        title: "Senha incorreta",
+        description: "Você possuí mais",
+        subDescription: "{{value}} tentativas",
+      },
+      error: {
+        title: "Senha bloqueada.",
+        description:
+          "Devido a {{value}} tentativas incorretas de digitação,\nsua senha ficará bloqueada por {{remaining_time}}",
+      },
+    },
   },
 };
