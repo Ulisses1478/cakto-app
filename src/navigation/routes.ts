@@ -118,7 +118,7 @@ export const ROUTES = Object.freeze({
   },
   pixSend: {
     name: "PixSend",
-    component: Pix.Send.Share,
+    component: Pix.Send.Home,
     protected: true,
   },
   pixSendInformPix: {
