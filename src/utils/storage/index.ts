@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 enum Keys {
   AUTH = "@cakto/auth",
   HIDE_VALUE = "@cakto/hide_value",
+  PIN_TRIES = "@cakto/pin_tries",
 }
 
 async function getItem<T = undefined>(key: Keys): Promise<T | null> {

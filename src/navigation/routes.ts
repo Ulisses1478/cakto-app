@@ -22,11 +22,36 @@ export type StackParams = {
   PixReceiveCustomValue: undefined;
   PixReceiveConfirmation: { value?: string };
   PixReceiveShare: { value?: string };
+  PixSend: undefined;
+  PixSendInformPix: { value: string };
+  PixSendSelectBankAccount: { value: string; pixKey: string };
+  PixSendConfirmation: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+  };
+  PixSendTypePassword: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+    message?: string;
+  };
+  PixSendShareTransfer: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+    message?: string;
+  };
 };
 
 type RouteStack<T> = Record<
   string,
-  { name: keyof T; component: any; protected: boolean }
+  {
+    name: keyof T;
+    component: any;
+    protected: boolean;
+    gestureEnabled?: boolean;
+  }
 >;
 
 export const ROUTES = Object.freeze({
@@ -64,6 +89,7 @@ export const ROUTES = Object.freeze({
     name: "Home",
     component: Home,
     protected: true,
+    gestureEnabled: false,
   },
   pixHome: {
     name: "PixHome",
@@ -89,6 +115,38 @@ export const ROUTES = Object.freeze({
     name: "PixReceiveShare",
     component: Pix.Receive.Share,
     protected: true,
+  },
+  pixSend: {
+    name: "PixSend",
+    component: Pix.Send.Home,
+    protected: true,
+  },
+  pixSendInformPix: {
+    name: "PixSendInformPix",
+    component: Pix.Send.InformPix,
+    protected: true,
+  },
+  pixSendSelectBankAccount: {
+    name: "PixSendSelectBankAccount",
+    component: Pix.Send.SelectBankAccount,
+    protected: true,
+  },
+  pixSendConfirmation: {
+    name: "PixSendConfirmation",
+    component: Pix.Send.Confirmation,
+    protected: true,
+  },
+  pixSendTypePassword: {
+    name: "PixSendTypePassword",
+    component: Pix.Send.TypePassword,
+    protected: true,
+    gestureEnabled: false,
+  },
+  pixSendShareTransfer: {
+    name: "PixSendShareTransfer",
+    component: Pix.Send.Share,
+    protected: true,
+    gestureEnabled: false,
   },
 }) as RouteStack<StackParams>;
 

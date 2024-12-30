@@ -4,8 +4,11 @@ import {
   ViewStyle,
   ButtonProps as RNButtonProps,
   ActivityIndicator,
+  Keyboard,
 } from "react-native";
+
 import { Text } from "../texts";
+
 import { theme } from "@/styles/theme";
 
 const baseButtonProps = {
@@ -57,18 +60,24 @@ interface ButtonProps extends RNButtonProps {
   textProps?: TextStyle;
   variant?: "filled" | "unfilled";
   isLoading?: boolean;
+  leftIcon?: React.ReactNode | null;
 }
 
 export function Base(props: ButtonProps) {
   const {
     title,
-    style,
+    style: unparsedStyle,
     textProps,
     variant = "filled",
     isLoading = false,
+    disabled = false,
+    leftIcon = null,
+    onPress,
     ...rest
   } = props;
 
+  const style = unparsedStyle || {};
+  style.opacity = style.opacity || isLoading || disabled ? 0.5 : 1;
   const buttonProps = getStyleByVariant(variant, style);
 
   if (variant === "unfilled" && textProps?.color) {
@@ -76,7 +85,20 @@ export function Base(props: ButtonProps) {
   }
 
   return (
-    <TouchableOpacity disabled={isLoading} {...rest} style={buttonProps}>
+    <TouchableOpacity
+      disabled={isLoading || disabled}
+      {...rest}
+      onPress={(event) => {
+        if (typeof onPress === "function") {
+          onPress(event);
+          if (Keyboard.isVisible()) {
+            Keyboard.dismiss();
+          }
+        }
+      }}
+      style={buttonProps}
+    >
+      {leftIcon}
       <Text.Base style={textProps}>{title}</Text.Base>
       {isLoading && (
         <ActivityIndicator

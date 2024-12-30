@@ -8,6 +8,10 @@ import Pix from "./pix";
 import Edit from "./edit";
 import Minus from "./minus";
 import Home from "./home";
+import Chat from "./chat";
+import X from "./x";
+import CaktoShareScreen from "./cakto-share-screen";
+import Share from "./share";
 
 export const Image = Object.freeze({
   CaktoLogo,
@@ -20,6 +24,10 @@ export const Image = Object.freeze({
   Edit,
   Minus,
   Home,
+  Chat,
+  X,
+  CaktoShareScreen,
+  Share,
 });
 
 export const BgImages = {
