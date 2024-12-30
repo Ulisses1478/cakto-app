@@ -26,10 +26,6 @@ export function TypePassword({
 }: RouteStackParams<"PixSendTypePassword">) {
   const { isBlocked, getRemainingTime, pinAttempts, updateRetries, PIN_TRIES } =
     ContextHook.usePin();
-  const unparsedValue = Number(route.params?.value) || 0;
-  const unparsedPixValue = handleCurrency(unparsedValue / 100);
-  const pixKey = route.params.pixKey;
-  const message = route.params.message;
   const [pin, setPin] = useState(",,,");
   const pinRef = useRef<string[]>(["", "", "", ""]);
   const inputRefs = useRef<(RNTextInput | null)[]>([]);
@@ -179,11 +175,10 @@ export function TypePassword({
                             blockedAt: 0,
                           });
                           inputRefs.current[index]?.blur();
-                          console.log({
-                            pixKey,
-                            unparsedPixValue,
-                            message,
-                          });
+                          navigation.navigate(
+                            "PixSendShareTransfer",
+                            route.params
+                          );
                         }
                       }
                     }

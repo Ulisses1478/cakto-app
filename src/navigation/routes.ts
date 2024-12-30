@@ -36,6 +36,12 @@ export type StackParams = {
     bankAccount: { id: string; name: string };
     message?: string;
   };
+  PixSendShareTransfer: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+    message?: string;
+  };
 };
 
 type RouteStack<T> = Record<
@@ -112,7 +118,7 @@ export const ROUTES = Object.freeze({
   },
   pixSend: {
     name: "PixSend",
-    component: Pix.Send.Home,
+    component: Pix.Send.Share,
     protected: true,
   },
   pixSendInformPix: {
@@ -133,6 +139,12 @@ export const ROUTES = Object.freeze({
   pixSendTypePassword: {
     name: "PixSendTypePassword",
     component: Pix.Send.TypePassword,
+    protected: true,
+    gestureEnabled: false,
+  },
+  pixSendShareTransfer: {
+    name: "PixSendShareTransfer",
+    component: Pix.Send.Share,
     protected: true,
     gestureEnabled: false,
   },

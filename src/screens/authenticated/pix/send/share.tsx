@@ -1,9 +1,12 @@
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Share as RNShare } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import ViewShot, { captureRef } from "react-native-view-shot";
 
 import { Image } from "@/assets/images";
 import { Button, Flex, Text } from "@/components/ui";
 import { theme } from "@/styles/theme";
+import { useRef } from "react";
+import { RouteStackParams } from "@/navigation/routes";
 
 const base_data = [
   { title: "Valor", value: "R$ 100,00" },
@@ -84,13 +87,15 @@ function Container(props: ContainerProps) {
 }
 
 const mock_current_date = new Date();
-// format to 00/00/0000 - 00:00:00
 const formatted_date = new Date(mock_current_date).toLocaleString("pt-BR", {
   dateStyle: "short",
   timeStyle: "medium",
 });
 
-export function Share() {
+export function Share({
+  navigation,
+}: RouteStackParams<"PixSendShareTransfer">) {
+  const viewShotRef = useRef(null);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.color.gray[900] }}>
@@ -99,82 +104,93 @@ export function Share() {
             marginLeft: theme.spacing.xxs,
             marginTop: theme.spacing.xxs,
           }}
+          onPress={() => navigation.popToTop()}
         >
           <Image.X />
         </Button.Back>
         <ScrollView
           style={{
             flex: 1,
-            marginTop: theme.spacing.xxs,
-          }}
-          contentContainerStyle={{
-            gap: theme.spacing.xxs,
           }}
         >
-          <Image.CaktoShareScreen
-            svg={{
-              style: {
-                marginLeft: theme.spacing.xxs,
-              },
-            }}
-          />
-
-          <View style={{ marginHorizontal: theme.spacing.xxs }}>
-            <Text.Base style={{ fontSize: theme.font.size.md, lineHeight: 25 }}>
-              Comprovante de transfêrencia
-            </Text.Base>
-            <Text.Base
-              style={{
-                fontSize: theme.font.size.xxs,
-                lineHeight: 21,
-                fontWeight: theme.font.weight.regular,
-                fontFamily: theme.font.family.regular,
-              }}
-            >
-              {formatted_date}
-            </Text.Base>
-          </View>
-
-          <Container data={base_data} marginHorizontal={theme.spacing.xxs} />
-
-          {Object.entries(mock_data).map(([key, value], index) => (
-            <View
-              key={index}
-              style={{
-                gap: theme.spacing.base,
-                marginHorizontal: theme.spacing.xxs,
-              }}
-            >
-              <Text.Base>{key}</Text.Base>
-              <Container data={value} />
-            </View>
-          ))}
-
-          <View
+          <ViewShot
+            ref={viewShotRef}
             style={{
-              backgroundColor: theme.color.gray[800],
-              borderTopLeftRadius: theme.borderRadius.sm,
-              borderTopRightRadius: theme.borderRadius.sm,
+              flex: 1,
               gap: theme.spacing.xxs,
-              padding: theme.spacing.xxs,
+              backgroundColor: theme.color.gray[900],
+              marginTop: theme.spacing.xxs,
             }}
           >
-            <Text.Base style={{ lineHeight: 24 }}>Cakto Pay LTDA</Text.Base>
-            <Text.Base style={{ lineHeight: 24 }}>
-              CNPJ: 52.328.926/0001-04
-            </Text.Base>
-            <View>
-              <Text.Base style={{ lineHeight: 24 }}>ID da Transação</Text.Base>
+            <Image.CaktoShareScreen
+              svg={{
+                style: {
+                  marginLeft: theme.spacing.xxs,
+                },
+              }}
+            />
+
+            <View style={{ marginHorizontal: theme.spacing.xxs }}>
+              <Text.Base
+                style={{ fontSize: theme.font.size.md, lineHeight: 25 }}
+              >
+                Comprovante de transfêrencia
+              </Text.Base>
               <Text.Base
                 style={{
-                  fontWeight: theme.font.weight.medium,
-                  fontFamily: theme.font.family.medium,
+                  fontSize: theme.font.size.xxs,
+                  lineHeight: 21,
+                  fontWeight: theme.font.weight.regular,
+                  fontFamily: theme.font.family.regular,
                 }}
               >
-                DFAS5D1F6AS1DF63SA15DFA
+                {formatted_date}
               </Text.Base>
             </View>
-          </View>
+
+            <Container data={base_data} marginHorizontal={theme.spacing.xxs} />
+
+            {Object.entries(mock_data).map(([key, value], index) => (
+              <View
+                key={index}
+                style={{
+                  gap: theme.spacing.base,
+                  marginHorizontal: theme.spacing.xxs,
+                }}
+              >
+                <Text.Base>{key}</Text.Base>
+                <Container data={value} />
+              </View>
+            ))}
+
+            <View
+              style={{
+                backgroundColor: theme.color.gray[800],
+                borderTopLeftRadius: theme.borderRadius.sm,
+                borderTopRightRadius: theme.borderRadius.sm,
+                gap: theme.spacing.xxs,
+                padding: theme.spacing.xxs,
+              }}
+            >
+              <Text.Base style={{ lineHeight: 24 }}>Cakto Pay LTDA</Text.Base>
+              <Text.Base style={{ lineHeight: 24 }}>
+                CNPJ: 52.328.926/0001-04
+              </Text.Base>
+              <View>
+                <Text.Base style={{ lineHeight: 24 }}>
+                  ID da Transação
+                </Text.Base>
+                <Text.Base
+                  style={{
+                    fontWeight: theme.font.weight.medium,
+                    fontFamily: theme.font.family.medium,
+                  }}
+                >
+                  DFAS5D1F6AS1DF63SA15DFA
+                </Text.Base>
+              </View>
+            </View>
+          </ViewShot>
         </ScrollView>
         <View
           style={{
@@ -185,6 +201,19 @@ export function Share() {
           }}
         >
           <Button.Base
+            onPress={() => {
+              captureRef(viewShotRef, {
+                format: "png",
+                quality: 0.8,
+                result: "base64",
+              }).then((data) => {
+                const base64Data = `data:image/png;base64,` + data;
+                RNShare.share({
+                  url: base64Data,
+                  message: "Comprovante de transferência",
+                });
+              });
+            }}
             leftIcon={<Image.Share />}
             title="Compartilhar comprovante"
             style={{ backgroundColor: theme.color.secondary.normal }}
