@@ -36,7 +36,7 @@ function handleChangeText(text: string) {
     };
   }
 
-  if (Utils.Validators.Email(text) || text.includes("@")) {
+  if (Utils.Validators.Email(text)) {
     return { value: text, error: false, type: "e-mail" };
   }
 
