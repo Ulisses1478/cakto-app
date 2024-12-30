@@ -48,6 +48,8 @@ export const pix = {
     home: {
       title: "Qual o valor você quer enviar?",
       description: "Seu saldo atual é: ",
+      higherValue:
+        "O valor digitado ultrapassa seu saldo\ndisponível no momento.",
       buttons: {
         continue: "Continuar",
       },
