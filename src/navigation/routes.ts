@@ -22,6 +22,14 @@ export type StackParams = {
   PixReceiveCustomValue: undefined;
   PixReceiveConfirmation: { value?: string };
   PixReceiveShare: { value?: string };
+  PixSend: undefined;
+  PixSendInformPix: { value: string };
+  PixSendSelectBankAccount: { value: string; pixKey: string };
+  PixSendConfirmation: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+  };
 };
 
 type RouteStack<T> = Record<
@@ -88,6 +96,26 @@ export const ROUTES = Object.freeze({
   pixReceiveShare: {
     name: "PixReceiveShare",
     component: Pix.Receive.Share,
+    protected: true,
+  },
+  pixSend: {
+    name: "PixSend",
+    component: Pix.Send.Home,
+    protected: true,
+  },
+  pixSendInformPix: {
+    name: "PixSendInformPix",
+    component: Pix.Send.InformPix,
+    protected: true,
+  },
+  pixSendSelectBankAccount: {
+    name: "PixSendSelectBankAccount",
+    component: Pix.Send.SelectBankAccount,
+    protected: true,
+  },
+  pixSendConfirmation: {
+    name: "PixSendConfirmation",
+    component: Pix.Send.Confirmation,
     protected: true,
   },
 }) as RouteStack<StackParams>;

@@ -1,9 +1,11 @@
 import { Constants } from "./constants";
-import { Storage } from "./storage";
 import { Intl } from "./intl";
+import { Storage } from "./storage";
+import { Validators } from "./validators";
 
 export const Utils = Object.freeze({
   Constants,
   Storage,
   Intl,
+  Validators,
 });

@@ -28,8 +28,13 @@ function getOnlyNumbers(value?: string) {
   return value?.replace(/\D/g, "") || "";
 }
 
+function removeLeadingZeros(value?: string) {
+  return value?.replace(/^0+/, "") || "";
+}
+
 export const Number = Object.freeze({
   formatCurrency,
   formatToThousands,
   getOnlyNumbers,
+  removeLeadingZeros,
 });

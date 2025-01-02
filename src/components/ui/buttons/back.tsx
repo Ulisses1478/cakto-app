@@ -3,7 +3,7 @@ import { Image } from "@/assets/images";
 import { theme } from "@/styles/theme";
 
 export function Back(props: Partial<TouchableOpacityProps>) {
-  const { style, onPress, ...rest } = props;
+  const { style, onPress, children: unparsedChildren, ...rest } = props;
 
   const currentStyles = {
     width: theme.size.lg,
@@ -17,9 +17,11 @@ export function Back(props: Partial<TouchableOpacityProps>) {
     ...(style as any),
   };
 
+  const children = unparsedChildren || <Image.Chevron.Left onPress={onPress} />;
+
   return (
     <TouchableOpacity style={currentStyles} onPress={onPress} {...rest}>
-      <Image.Chevron.Left onPress={onPress} />
+      {children}
     </TouchableOpacity>
   );
 }

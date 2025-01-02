@@ -7,11 +7,13 @@ import {
   Pressable,
   LayoutAnimation,
 } from "react-native";
+
 import { Text } from "../texts";
+
 import { Image } from "@/assets/images";
 import { theme } from "@/styles/theme";
 
-interface TextInputProps extends RNTextInputProps {
+export interface TextInputProps extends RNTextInputProps {
   label?: string;
   style?: TextStyle;
   textProps?: TextStyle;
