@@ -4,6 +4,7 @@ import { SelectBankAccount } from "./select-account";
 import { Confirmation } from "./confirmation";
 import { TypePassword } from "./type-password";
 import { Share } from "./share";
+import { CopyAndPaste } from "./copy-and-paste";
 
 export const Send = {
   Home,
@@ -12,4 +13,5 @@ export const Send = {
   Confirmation,
   TypePassword,
   Share,
+  CopyAndPaste,
 };

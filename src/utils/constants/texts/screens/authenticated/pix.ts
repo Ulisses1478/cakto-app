@@ -121,5 +121,12 @@ export const pix = {
           "Devido a {{value}} tentativas incorretas de digitação,\nsua senha ficará bloqueada por {{remaining_time}}",
       },
     },
+    copyAndPaste: {
+      title: "Insira o código Pix Copia e Cola",
+      inputPlaceholder: "Cole o código aqui",
+      buttons: {
+        continue: "Continuar",
+      },
+    },
   },
 };
