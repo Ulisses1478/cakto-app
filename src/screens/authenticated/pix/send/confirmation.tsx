@@ -26,8 +26,9 @@ export function Confirmation({
 }: RouteStackParams<"PixSendConfirmation">) {
   const unparsedValue = Number(route.params?.value) || 0;
   const unparsedPixValue = handleCurrency(unparsedValue / 100);
-  // const pixKey = route.params.pixKey;
+  const pixKey = route.params.pixKey;
   const bankAccount = route.params.bankAccount;
+  const canEdit = route.params?.canEditFromAutomaticSource ?? true;
   const [value, setValue] = useState(unparsedPixValue);
   const [pixValue, setPixValue] = useState(unparsedPixValue);
   const [message, setMessage] = useState("");
@@ -151,6 +152,14 @@ export function Confirmation({
         wrapWithScrollView: true,
         footer: (
           <Button.Base
+            onPress={() =>
+              navigation.navigate("PixSendTypePassword", {
+                pixKey,
+                value: IntlNumber.getOnlyNumbers(pixValue),
+                message,
+                bankAccount,
+              })
+            }
             title={Texts.buttons.transfer.replace("{value}", pixValue)}
             style={{ backgroundColor: theme.color.secondary.normal }}
           />
@@ -185,25 +194,27 @@ export function Confirmation({
           <Text.Base style={{ fontSize: theme.font.size.xl, lineHeight: 32 }}>
             {pixValue}
           </Text.Base>
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: theme.spacing.quarck,
-              gap: theme.spacing.nano,
-            }}
-            onPress={handleEditPixValue}
-          >
-            <Image.Edit path={{ stroke: theme.color.secondary.bright }} />
-            <Text.Base
+          {canEdit && (
+            <TouchableOpacity
               style={{
-                fontSize: theme.font.size.xxs,
-                color: theme.color.secondary.bright,
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: theme.spacing.quarck,
+                gap: theme.spacing.nano,
               }}
+              onPress={handleEditPixValue}
             >
-              {Texts.edit}
-            </Text.Base>
-          </TouchableOpacity>
+              <Image.Edit path={{ stroke: theme.color.secondary.bright }} />
+              <Text.Base
+                style={{
+                  fontSize: theme.font.size.xxs,
+                  color: theme.color.secondary.bright,
+                }}
+              >
+                {Texts.edit}
+              </Text.Base>
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={{ gap: theme.spacing.nano }}>

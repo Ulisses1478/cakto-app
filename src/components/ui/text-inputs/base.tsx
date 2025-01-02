@@ -17,6 +17,7 @@ export interface TextInputProps extends RNTextInputProps {
   label?: string;
   style?: TextStyle;
   textProps?: TextStyle;
+  disabled?: boolean;
   focusedStyle?: {
     style?: TextStyle;
     placeholderTextColor?: string;
@@ -63,6 +64,7 @@ function TextInputBase(props: TextInputProps, ref: any) {
     onFocus,
     onBlur,
     bottomRightProps,
+    disabled = false,
     ...rest
   } = props;
 
@@ -77,7 +79,9 @@ function TextInputBase(props: TextInputProps, ref: any) {
     textContentType: "password",
   };
 
-  const flexDirection = secureTextEntry ? "row" : "column";
+  const isPassword = secureTextEntry && rest.keyboardType !== "number-pad";
+
+  const flexDirection = isPassword ? "row" : "column";
 
   function handleInputFocus(focus: boolean) {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -91,8 +95,9 @@ function TextInputBase(props: TextInputProps, ref: any) {
           {label}
         </Text.Base>
       )}
-      <View style={{ flexDirection: flexDirection }}>
+      <View style={{ flexDirection }}>
         <TextInput
+          readOnly={disabled}
           ref={ref}
           style={{
             fontFamily: theme.font.family.medium,
@@ -117,8 +122,8 @@ function TextInputBase(props: TextInputProps, ref: any) {
             onBlur?.(value);
           }}
           placeholderTextColor={placeholderTextColor}
-          {...(secureTextEntry ? basePasswordProps : {})}
-          secureTextEntry={secureTextEntry && !showPassword}
+          {...(isPassword ? basePasswordProps : {})}
+          secureTextEntry={isPassword && !showPassword}
           {...(rest.keyboardType === "number-pad"
             ? { returnKeyType: "done" }
             : {})}
@@ -140,7 +145,7 @@ function TextInputBase(props: TextInputProps, ref: any) {
             {bottomRightProps.text}
           </Text.Base>
         )}
-        {secureTextEntry && (
+        {isPassword && (
           <Pressable
             onPress={() => setShowPassword(!showPassword)}
             style={{

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Alert, Keyboard, View, TextInput as RNTextInput } from "react-native";
+import { Keyboard, View, TextInput as RNTextInput } from "react-native";
 
 import {
   Button,
@@ -18,10 +18,9 @@ import { Utils } from "@/utils";
 const IntlNumber = Utils.Intl.Number;
 const handleCurrency = IntlNumber.formatCurrency;
 const Texts = Utils.Constants.Text.authenticated.pix;
-const mock_total_value = Math.random() * 10 * 1000;
+const mock_total_value = Number((Math.random() * 10 * 1000).toFixed(2));
 
 const feedBackWarningProps = {
-  // title: Texts.send.home.warning.title,
   description: Texts.send.home.warning.description,
   onSubmitText: Texts.send.home.warning.onSubmitText,
   scheme: "warning",
@@ -49,6 +48,23 @@ export function Send({ navigation }: RouteStackParams<"PixSend">) {
     modalRef.current?.onClose();
     inputRef.current?.focus();
   };
+
+  function valueIsHigherThanTotalValue() {
+    const currentTypedValue = Number(
+      IntlNumber.removeLeadingZeros(IntlNumber.getOnlyNumbers(value))
+    );
+
+    const parsedTotalValue = Number(
+      IntlNumber.getOnlyNumbers(String(mock_total_value))
+    );
+
+    if (Number.isNaN(currentTypedValue) || currentTypedValue === 0)
+      return false;
+
+    if (currentTypedValue > parsedTotalValue) {
+      return true;
+    }
+  }
 
   return (
     <Template.Base
@@ -125,9 +141,31 @@ export function Send({ navigation }: RouteStackParams<"PixSend">) {
           }}
           autoFocus
         />
+        {valueIsHigherThanTotalValue() && (
+          <View
+            style={{
+              paddingHorizontal: theme.spacing.xxxs,
+              paddingVertical: theme.spacing.nano,
+              borderRadius: theme.borderRadius.sm,
+              backgroundColor: theme.color.white["012"],
+            }}
+          >
+            <Text.Base
+              style={{
+                fontSize: theme.font.size.xxs,
+                lineHeight: 21,
+                fontWeight: theme.font.weight.medium,
+                fontFamily: theme.font.family.medium,
+              }}
+            >
+              {Texts.send.home.higherValue}
+            </Text.Base>
+          </View>
+        )}
       </View>
       <View style={{ gap: theme.spacing.base }}>
         <Button.Base
+          disabled={valueIsHigherThanTotalValue()}
           title={Texts.send.home.buttons.continue}
           style={{
             backgroundColor: theme.color.secondary.normal,
