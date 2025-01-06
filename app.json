@@ -2,7 +2,7 @@
   "expo": {
     "name": "Cakto",
     "slug": "cakto",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "newArchEnabled": true,
     "web": {
       "favicon": "src/assets/images/cakto.png"
