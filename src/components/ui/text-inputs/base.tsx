@@ -31,6 +31,7 @@ export interface TextInputProps extends RNTextInputProps {
 
 function dynamicStyles(
   isFocused: boolean,
+  disabled: boolean,
   focusedStyle?: TextInputProps["focusedStyle"]
 ) {
   if (isFocused) {
@@ -48,7 +49,7 @@ function dynamicStyles(
   return {
     style: {
       borderColor: theme.color.white["064"],
-      color: theme.color.white[100],
+      color: theme.color.white[!disabled ? "100" : "064"],
     },
     placeholderTextColor: theme.color.white["064"],
   };
@@ -70,7 +71,10 @@ function TextInputBase(props: TextInputProps, ref: any) {
 
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { style: inputStyle, placeholderTextColor } = dynamicStyles(isFocused);
+  const { style: inputStyle, placeholderTextColor } = dynamicStyles(
+    isFocused,
+    (disabled || !!rest?.readOnly) as boolean
+  );
 
   const basePasswordProps: RNTextInputProps = {
     autoCorrect: false,

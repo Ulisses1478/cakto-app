@@ -32,7 +32,7 @@ const unfilledButtonProps = {
 };
 
 function getStyleByVariant(
-  variant: ButtonProps["variant"],
+  variant: BaseButtonProps["variant"],
   style?: ViewStyle
 ): ViewStyle {
   if (variant === "filled") {
@@ -54,7 +54,7 @@ function getStyleByVariant(
   return baseButtonProps as ViewStyle;
 }
 
-interface ButtonProps extends RNButtonProps {
+export interface BaseButtonProps extends RNButtonProps {
   title: string;
   style?: ViewStyle;
   textProps?: TextStyle;
@@ -63,7 +63,7 @@ interface ButtonProps extends RNButtonProps {
   leftIcon?: React.ReactNode | null;
 }
 
-export function Base(props: ButtonProps) {
+export function Base(props: BaseButtonProps) {
   const {
     title,
     style: unparsedStyle,

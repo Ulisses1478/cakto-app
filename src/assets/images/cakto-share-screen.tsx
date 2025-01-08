@@ -1,15 +1,15 @@
 import Svg, { Path, SvgProps } from "react-native-svg";
 interface Props {
-  svg: SvgProps;
+  svg?: SvgProps;
 }
-export default function CaktoShare(props: Props) {
+export default function CaktoShare(props?: Props) {
   return (
     <Svg
       width="108"
       height="24"
       viewBox="0 0 108 24"
       fill="none"
-      {...props.svg}
+      {...props?.svg}
     >
       <Path
         fillRule="evenodd"

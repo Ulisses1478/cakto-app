@@ -196,6 +196,29 @@ export function TypePassword({
               </Flex>
             </View>
           )}
+          {pinAttempts.value >= PIN_TRIES && (
+            <View style={{ gap: theme.spacing.nano }}>
+              <Text.Base
+                style={{
+                  fontSize: theme.font.size.md,
+                  lineHeight: 20,
+                  color: theme.color.red.negative,
+                }}
+              >
+                {Texts.error.title}
+              </Text.Base>
+              <Text.Base
+                style={{
+                  fontSize: theme.font.size.xxxs,
+                  lineHeight: 21,
+                  fontWeight: theme.font.weight.medium,
+                  fontFamily: theme.font.family.medium,
+                }}
+              >
+                {parseBlockTime}.
+              </Text.Base>
+            </View>
+          )}
           <Flex style={{ justifyContent: "space-between" }}>
             {pin.split(",").map((digit, index) => {
               return (
@@ -270,29 +293,6 @@ export function TypePassword({
               );
             })}
           </Flex>
-          {pinAttempts.value >= PIN_TRIES && (
-            <View style={{ gap: theme.spacing.nano }}>
-              <Text.Base
-                style={{
-                  fontSize: theme.font.size.md,
-                  lineHeight: 20,
-                  color: theme.color.red.negative,
-                }}
-              >
-                {Texts.error.title}
-              </Text.Base>
-              <Text.Base
-                style={{
-                  fontSize: theme.font.size.xxxs,
-                  lineHeight: 21,
-                  fontWeight: theme.font.weight.medium,
-                  fontFamily: theme.font.family.medium,
-                }}
-              >
-                {parseBlockTime}.
-              </Text.Base>
-            </View>
-          )}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
