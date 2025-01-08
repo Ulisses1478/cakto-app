@@ -29,6 +29,7 @@ export type StackParams = {
     value: string;
     pixKey: string;
     bankAccount: { id: string; name: string };
+    canEditFromAutomaticSource?: boolean;
   };
   PixSendTypePassword: {
     value: string;
@@ -42,6 +43,7 @@ export type StackParams = {
     bankAccount: { id: string; name: string };
     message?: string;
   };
+  PixSendCopyAndPaste: undefined;
 };
 
 type RouteStack<T> = Record<
@@ -147,6 +149,11 @@ export const ROUTES = Object.freeze({
     component: Pix.Send.Share,
     protected: true,
     gestureEnabled: false,
+  },
+  pixSendCopyAndPaste: {
+    name: "PixSendCopyAndPaste",
+    component: Pix.Send.CopyAndPaste,
+    protected: true,
   },
 }) as RouteStack<StackParams>;
 

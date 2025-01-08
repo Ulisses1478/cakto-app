@@ -24,7 +24,7 @@ const options = [
   {
     label: Texts.home.options.copyAndPaste,
     icon: <Image.Pix.CopyAndPaste />,
-    route: "",
+    route: "PixSendCopyAndPaste",
   },
   {
     label: Texts.home.options.readQrCode,
