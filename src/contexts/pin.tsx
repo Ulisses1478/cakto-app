@@ -16,7 +16,7 @@ interface PinProviderProps {
   PIN_TRIES: number;
 }
 
-const TEN_MINUTES = 10_000 * 60;
+const TEN_MINUTES = 1_000 * 60;
 const PIN_TRIES = 3;
 
 interface PinAttemptsProps {

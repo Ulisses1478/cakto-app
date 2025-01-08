@@ -1,4 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
+
 import {
   Splash,
   Start,
@@ -7,7 +8,9 @@ import {
   ConfirmResetCode,
   ResetPassword,
 } from "../screens/public";
-import { Home, Pix } from "@/screens/authenticated";
+
+import { Home, Pix, Register } from "@/screens/authenticated";
+import { ServiceProps } from "@/services";
 
 export type StackParams = {
   Splash: undefined;
@@ -45,6 +48,12 @@ export type StackParams = {
   };
   PixSendCopyAndPaste: undefined;
   PixSendReadQRCode: undefined;
+  RegisterHome: undefined;
+  RegisterEditData: {
+    company: ServiceProps["Financial"]["Company"]["Get"];
+  };
+  RegisterFaceValidationHome: undefined;
+  RegisterFaceValidationConfirmSelfie: undefined;
 };
 
 type RouteStack<T> = Record<
@@ -159,6 +168,26 @@ export const ROUTES = Object.freeze({
   pixSendReadQRCode: {
     name: "PixSendReadQRCode",
     component: Pix.Send.ReadQRCode,
+    protected: true,
+  },
+  registerHome: {
+    name: "RegisterHome",
+    component: Register.Home,
+    protected: true,
+  },
+  registerEditData: {
+    name: "RegisterEditData",
+    component: Register.EditData,
+    protected: true,
+  },
+  registerFaceValidationHome: {
+    name: "RegisterFaceValidationHome",
+    component: Register.FaceValidation.Home,
+    protected: true,
+  },
+  registerRegisterFaceValidationConfirmSelfie: {
+    name: "RegisterFaceValidationConfirmSelfie",
+    component: Register.FaceValidation.ConfirmSelfie,
     protected: true,
   },
 }) as RouteStack<StackParams>;

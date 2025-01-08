@@ -282,17 +282,26 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
         </View>
       </View>
 
-      <Button.Base
-        variant="unfilled"
-        onPress={() => {
-          handleLogout();
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "Login" }],
-          });
-        }}
-        title="Sair"
-      />
+      <View style={{ gap: theme.spacing.xxxs }}>
+        <Button.Base
+          variant="unfilled"
+          onPress={() => {
+            navigation.navigate("RegisterHome");
+          }}
+          title="Cadastro"
+        />
+        <Button.Base
+          variant="unfilled"
+          onPress={() => {
+            handleLogout();
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            });
+          }}
+          title="Sair"
+        />
+      </View>
     </Template.Base>
   );
 }

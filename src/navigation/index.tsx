@@ -1,4 +1,7 @@
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  createNavigationContainerRef,
+  NavigationContainer,
+} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 
@@ -7,6 +10,7 @@ import { ROUTES, StackParams } from "./routes";
 import { Context } from "@/contexts";
 
 const Stack = createStackNavigator<StackParams>();
+export const navigationRef = createNavigationContainerRef();
 
 const unprotectRoutes = Object.values(ROUTES).filter(
   (route) => !route.protected

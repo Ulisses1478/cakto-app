@@ -1,5 +1,7 @@
-import { Utils } from "@/utils";
 import axios, { AxiosError, AxiosResponse } from "axios";
+
+import { navigationRef } from "@/navigation";
+import { Utils } from "@/utils";
 
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -14,6 +16,18 @@ api.interceptors.request.use(async (config) => {
 
     if (auth) {
       config.headers.Authorization = `Bearer ${auth.token}`;
+    }
+  }
+
+  return config;
+});
+
+api.interceptors.response.use(async (config) => {
+  console.log("status_code", config.status);
+  if (config.status === 401) {
+    await Utils.Storage.removeItem(Utils.Storage.Keys.AUTH);
+    if (navigationRef.isReady()) {
+      navigationRef.navigate("Login" as unknown as never);
     }
   }
 
