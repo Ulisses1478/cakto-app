@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import { Image } from "@/assets/images";
 import { Button, Flex, Text, TextInput } from "@/components/ui";
@@ -16,7 +17,6 @@ import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
 
 const IntlNumber = Utils.Intl.Number;
-const handleCurrency = IntlNumber.formatCurrency;
 const Texts = Utils.Constants.Text.authenticated.pix.send.typePassword;
 const PIN_LENGTH = 4;
 
@@ -26,10 +26,11 @@ export function TypePassword({
 }: RouteStackParams<"PixSendTypePassword">) {
   const { isBlocked, getRemainingTime, pinAttempts, updateRetries, PIN_TRIES } =
     ContextHook.usePin();
-  const [pin, setPin] = useState(",,,");
+  const pin = ",,,";
   const pinRef = useRef<string[]>(["", "", "", ""]);
   const inputRefs = useRef<(RNTextInput | null)[]>([]);
   const [blockTime, setBlockTime] = useState({ minutes: "10", seconds: "00" });
+  const [inputFocused, setInputFocused] = useState(0);
 
   const goBack = () => {
     if (pinAttempts.value >= PIN_TRIES) {
@@ -126,74 +127,36 @@ export function TypePassword({
 
           <Flex style={{ justifyContent: "space-between" }}>
             {pin.split(",").map((digit, index) => {
+              const isFocused = inputFocused === index;
+              const color = theme.color.white[isFocused ? "100" : "064"];
               return (
-                <TextInput.Base
-                  ref={(r) => {
-                    if (r) {
-                      inputRefs.current[index] = r as RNTextInput;
-                    }
+                <TouchableWithoutFeedback
+                  disabled={pinAttempts.value >= PIN_TRIES}
+                  onPress={() => {
+                    inputRefs.current[index]?.focus();
+                    setInputFocused(index);
                   }}
                   key={index}
                   style={{
-                    textAlign: "center",
                     width: 74.5,
                     height: 74,
+                    borderWidth: theme.borderWidth.hairline,
+                    borderColor: color,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: theme.borderRadius.sm,
                   }}
-                  disabled={pinAttempts.value >= PIN_TRIES}
-                  placeholder={inputRefs.current[index]?.isFocused() ? "" : "•"}
-                  onChangeText={(value) => {
-                    const parsedValue = value.length > 1 ? value[1] : value;
-                    pinRef.current[index] = parsedValue;
-                    setPin("*,*,*,*");
-
-                    if (parsedValue && index < PIN_LENGTH - 1) {
-                      inputRefs.current[index + 1]?.focus();
-                    }
-
-                    if (Number(parsedValue) && index === PIN_LENGTH - 1) {
-                      if (
-                        index === PIN_LENGTH - 1 &&
-                        pinRef.current.join("").length === PIN_LENGTH
-                      ) {
-                        const currentPassword = pinRef.current.join("");
-                        // TODO: Implementar lógica para enviar para o backend
-                        if (currentPassword !== "1234") {
-                          const currentRetries = pinAttempts.value + 1;
-                          updateRetries({
-                            value: currentRetries,
-                          });
-                          setBlockTime(getRemainingTime());
-                          if (pinAttempts.value < PIN_TRIES) {
-                            pinRef.current = [];
-                            inputRefs.current[0]?.focus();
-                          } else if (pinAttempts.value >= PIN_TRIES) {
-                            inputRefs.current[index]?.blur();
-                          }
-                        } else {
-                          updateRetries({
-                            value: 0,
-                            blockedAt: 0,
-                          });
-                          inputRefs.current[index]?.blur();
-                          navigation.navigate(
-                            "PixSendShareTransfer",
-                            route.params
-                          );
-                        }
-                      }
-                    }
-                  }}
-                  onKeyPress={({ nativeEvent }) => {
-                    if (nativeEvent.key === "Backspace" && index > 0) {
-                      inputRefs.current[index - 1]?.focus();
-                      pinRef.current[index - 1] = "";
-                    }
-                  }}
-                  autoFocus={index === 0}
-                  value={digit}
-                  keyboardType="number-pad"
-                  secureTextEntry
-                />
+                >
+                  <Text.Base
+                    style={{
+                      textAlign: "center",
+                      fontSize: theme.font.size.xxs,
+                      color,
+                    }}
+                  >
+                    {pinRef.current[index] ? "•" : isFocused ? "" : "*"}
+                  </Text.Base>
+                </TouchableWithoutFeedback>
               );
             })}
           </Flex>
@@ -233,6 +196,80 @@ export function TypePassword({
               </Flex>
             </View>
           )}
+          <Flex style={{ justifyContent: "space-between" }}>
+            {pin.split(",").map((digit, index) => {
+              return (
+                <TextInput.Base
+                  ref={(r) => {
+                    if (r) {
+                      inputRefs.current[index] = r as RNTextInput;
+                    }
+                  }}
+                  key={index}
+                  style={{
+                    opacity: 0,
+                  }}
+                  disabled={pinAttempts.value >= PIN_TRIES}
+                  onChangeText={(value) => {
+                    const parsedValue = value.length > 1 ? value[1] : value;
+                    pinRef.current[index] = parsedValue;
+
+                    if (parsedValue && index < PIN_LENGTH - 1) {
+                      inputRefs.current[index + 1]?.focus();
+                      setInputFocused(index + 1);
+                    }
+
+                    if (Number(parsedValue) && index === PIN_LENGTH - 1) {
+                      if (
+                        index === PIN_LENGTH - 1 &&
+                        pinRef.current.join("").length === PIN_LENGTH
+                      ) {
+                        const currentPassword = pinRef.current.join("");
+                        // TODO: Implementar lógica para enviar para o backend
+                        if (currentPassword !== "1234") {
+                          const currentRetries = pinAttempts.value + 1;
+                          updateRetries({
+                            value: currentRetries,
+                          });
+                          setBlockTime(getRemainingTime());
+                          if (pinAttempts.value < PIN_TRIES) {
+                            pinRef.current = [];
+                            inputRefs.current[0]?.focus();
+                            setInputFocused(0);
+                          } else if (pinAttempts.value >= PIN_TRIES) {
+                            inputRefs.current[index]?.blur();
+                            setInputFocused(-1);
+                          }
+                        } else {
+                          updateRetries({
+                            value: 0,
+                            blockedAt: 0,
+                          });
+                          inputRefs.current[index]?.blur();
+                          setInputFocused(-1);
+                          navigation.navigate(
+                            "PixSendShareTransfer",
+                            route.params
+                          );
+                        }
+                      }
+                    }
+                  }}
+                  onKeyPress={({ nativeEvent }) => {
+                    if (nativeEvent.key === "Backspace" && index > 0) {
+                      inputRefs.current[index - 1]?.focus();
+                      setInputFocused(index - 1);
+                      pinRef.current[index - 1] = "";
+                    }
+                  }}
+                  autoFocus={index === 0}
+                  value={digit}
+                  keyboardType="number-pad"
+                  secureTextEntry
+                />
+              );
+            })}
+          </Flex>
           {pinAttempts.value >= PIN_TRIES && (
             <View style={{ gap: theme.spacing.nano }}>
               <Text.Base

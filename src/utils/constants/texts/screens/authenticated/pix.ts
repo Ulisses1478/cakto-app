@@ -128,5 +128,26 @@ export const pix = {
         continue: "Continuar",
       },
     },
+    qrcode: {
+      title:
+        "Aponte a câmera para o QR Code e aguarde\na leitura para efetuar o seu pagamento.",
+      requestPermissionTitle:
+        "Precisamos da sua permissão para abrir a câmera e ler o QR Code",
+      buttons: {
+        grantPermission: "Dar permissão",
+      },
+      warning: {
+        title: "QR Code não encontrado",
+        description: "Centralize a imagem do QR Code\nna tela de leitura.",
+        onSubmitText: "Tentar novamente",
+        onCancelText: "Usar Pix Copia e Cola",
+      },
+      invalid: {
+        title: "Esse QR Code não é de um Pix",
+        description:
+          "Não é possível fazer o pagamento.\nPeça um QR Code de Pix pra quem\nvocê quer pagar ou refaça sua compra.",
+        onSubmitText: "Entendi",
+      },
+    },
   },
 };

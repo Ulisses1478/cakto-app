@@ -29,7 +29,7 @@ const options = [
   {
     label: Texts.home.options.readQrCode,
     icon: <Image.Pix.ReadQrCode />,
-    route: "",
+    route: "PixSendReadQRCode",
   },
 ];
 

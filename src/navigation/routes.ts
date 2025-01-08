@@ -44,6 +44,7 @@ export type StackParams = {
     message?: string;
   };
   PixSendCopyAndPaste: undefined;
+  PixSendReadQRCode: undefined;
 };
 
 type RouteStack<T> = Record<
@@ -153,6 +154,11 @@ export const ROUTES = Object.freeze({
   pixSendCopyAndPaste: {
     name: "PixSendCopyAndPaste",
     component: Pix.Send.CopyAndPaste,
+    protected: true,
+  },
+  pixSendReadQRCode: {
+    name: "PixSendReadQRCode",
+    component: Pix.Send.ReadQRCode,
     protected: true,
   },
 }) as RouteStack<StackParams>;
