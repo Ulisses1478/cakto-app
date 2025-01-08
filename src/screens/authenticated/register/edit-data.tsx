@@ -169,7 +169,11 @@ export function EditData({
     mock_template.forEach((row) => {
       row.forEach((field) => {
         if (response?.[field.mapper]) {
-          field.value = response[field.mapper] ?? "";
+          if (field.type === "date") {
+            field.value = String(new Date(response[field.mapper]!));
+          } else {
+            field.value = response[field.mapper] ?? "";
+          }
         }
       });
     });
