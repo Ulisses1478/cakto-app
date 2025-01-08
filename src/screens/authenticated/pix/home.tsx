@@ -33,7 +33,7 @@ const options = [
   },
 ];
 
-const mock_pix_key = "d123123asdasdqweqws2e";
+const mock_pix_key = "29d2fdda-76b8-4cd4-820e-39b50103a1f4";
 
 export function Home({ navigation }: RouteStackParams<"PixHome">) {
   return (
@@ -169,7 +169,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
               </View>
               <Text.Base
                 style={{
-                  fontSize: theme.font.size.xxs,
+                  fontSize: theme.font.size.xxxs,
                   fontWeight: theme.font.weight.regular,
                   fontFamily: theme.font.family.regular,
                 }}

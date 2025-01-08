@@ -136,7 +136,7 @@ export function Confirmation({
             bottomRightProps={{
               text: Texts.receive.confirmation.optional,
             }}
-            maxLength={25}
+            maxLength={35}
           />
         </View>
       </View>

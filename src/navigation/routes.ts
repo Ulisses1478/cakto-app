@@ -30,11 +30,28 @@ export type StackParams = {
     pixKey: string;
     bankAccount: { id: string; name: string };
   };
+  PixSendTypePassword: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+    message?: string;
+  };
+  PixSendShareTransfer: {
+    value: string;
+    pixKey: string;
+    bankAccount: { id: string; name: string };
+    message?: string;
+  };
 };
 
 type RouteStack<T> = Record<
   string,
-  { name: keyof T; component: any; protected: boolean }
+  {
+    name: keyof T;
+    component: any;
+    protected: boolean;
+    gestureEnabled?: boolean;
+  }
 >;
 
 export const ROUTES = Object.freeze({
@@ -72,6 +89,7 @@ export const ROUTES = Object.freeze({
     name: "Home",
     component: Home,
     protected: true,
+    gestureEnabled: false,
   },
   pixHome: {
     name: "PixHome",
@@ -117,6 +135,18 @@ export const ROUTES = Object.freeze({
     name: "PixSendConfirmation",
     component: Pix.Send.Confirmation,
     protected: true,
+  },
+  pixSendTypePassword: {
+    name: "PixSendTypePassword",
+    component: Pix.Send.TypePassword,
+    protected: true,
+    gestureEnabled: false,
+  },
+  pixSendShareTransfer: {
+    name: "PixSendShareTransfer",
+    component: Pix.Send.Share,
+    protected: true,
+    gestureEnabled: false,
   },
 }) as RouteStack<StackParams>;
 

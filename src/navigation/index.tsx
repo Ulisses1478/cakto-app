@@ -1,8 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { ROUTES, StackParams } from "./routes";
-import { Context } from "@/contexts";
 import { StatusBar } from "expo-status-bar";
+
+import { ROUTES, StackParams } from "./routes";
+
+import { Context } from "@/contexts";
 
 const Stack = createStackNavigator<StackParams>();
 
@@ -17,28 +19,33 @@ const authenticatedRoutes = Object.values(ROUTES).filter(
 export default function RootStack() {
   return (
     <Context.AuthProvider>
-      <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={unprotectRoutes[0].name}>
-          {unprotectRoutes.map((route) => (
-            <Stack.Screen
-              key={route.name}
-              name={route.name}
-              component={route.component}
-              options={{ headerShown: false }}
-            />
-          ))}
+      <Context.PinProvider>
+        <StatusBar style="light" />
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName={unprotectRoutes[0].name}>
+            {unprotectRoutes.map((route) => (
+              <Stack.Screen
+                key={route.name}
+                name={route.name}
+                component={route.component}
+                options={{ headerShown: false }}
+              />
+            ))}
 
-          {authenticatedRoutes.map((route) => (
-            <Stack.Screen
-              key={route.name}
-              name={route.name}
-              component={route.component}
-              options={{ headerShown: false }}
-            />
-          ))}
-        </Stack.Navigator>
-      </NavigationContainer>
+            {authenticatedRoutes.map((route) => (
+              <Stack.Screen
+                key={route.name}
+                name={route.name}
+                component={route.component}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: route.gestureEnabled ?? true,
+                }}
+              />
+            ))}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Context.PinProvider>
     </Context.AuthProvider>
   );
 }
