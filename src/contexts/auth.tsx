@@ -5,9 +5,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Utils } from "@/utils";
-import { Service, ServiceProps, api } from "@/services";
-import { HandleResponseProps } from "@/services/api";
+
+import { Service, ServiceProps, api } from "../services";
+import { HandleResponseProps } from "../services/api";
+import { Utils } from "../utils";
 
 type LoginCredentialsRequest = ServiceProps["Auth"]["CredentialsRequest"];
 
