@@ -1,5 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 
+import { Home, Pix, Register } from "../screens/authenticated";
 import {
   Splash,
   Start,
@@ -8,9 +9,7 @@ import {
   ConfirmResetCode,
   ResetPassword,
 } from "../screens/public";
-
-import { Home, Pix, Register } from "@/screens/authenticated";
-import { ServiceProps } from "@/services";
+import { ServiceProps } from "../services";
 
 export type StackParams = {
   Splash: undefined;
@@ -54,6 +53,7 @@ export type StackParams = {
   };
   RegisterFaceValidationHome: undefined;
   RegisterFaceValidationConfirmSelfie: undefined;
+  PixKeysHome: undefined;
 };
 
 type RouteStack<T> = Record<
@@ -188,6 +188,11 @@ export const ROUTES = Object.freeze({
   registerRegisterFaceValidationConfirmSelfie: {
     name: "RegisterFaceValidationConfirmSelfie",
     component: Register.FaceValidation.ConfirmSelfie,
+    protected: true,
+  },
+  pixKeysHome: {
+    name: "PixKeysHome",
+    component: Pix.Keys.Home,
     protected: true,
   },
 }) as RouteStack<StackParams>;
