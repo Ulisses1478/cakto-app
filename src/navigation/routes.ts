@@ -54,6 +54,13 @@ export type StackParams = {
   RegisterFaceValidationHome: undefined;
   RegisterFaceValidationConfirmSelfie: undefined;
   PixKeysHome: undefined;
+  PixNewKeyCpfHome: undefined;
+  PixNewKeyPortability: {
+    type: string;
+    value: string;
+    bankName: string;
+    date: string;
+  };
 };
 
 type RouteStack<T> = Record<
@@ -194,6 +201,17 @@ export const ROUTES = Object.freeze({
     name: "PixKeysHome",
     component: Pix.Keys.Home,
     protected: true,
+  },
+  pixNewKeyCpfHome: {
+    name: "PixNewKeyCpfHome",
+    component: Pix.Keys.New.CPF.Home,
+    protected: true,
+  },
+  pixNewKeyPortability: {
+    name: "PixNewKeyPortability",
+    component: Pix.Keys.New.Portability,
+    protected: true,
+    gestureEnabled: false,
   },
 }) as RouteStack<StackParams>;
 

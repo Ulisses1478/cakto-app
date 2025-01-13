@@ -67,6 +67,13 @@ class Key {
 
     return handleMockResponse(fetcher);
   }
+
+  async requestPortability(key: string) {
+    const fetcher = () =>
+      new Promise((resolve) => setTimeout(resolve, Math.random() * 2000));
+
+    return handleMockResponse(fetcher);
+  }
 }
 
 export default new Key();
