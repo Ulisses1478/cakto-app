@@ -7,9 +7,8 @@ import { StatusBar } from "expo-status-bar";
 import ToastManager from "toastify-react-native";
 
 import { ROUTES, StackParams } from "./routes";
+import { toast } from "../components/ui";
 import { Context } from "../contexts";
-
-import { toast } from "@/components/ui";
 
 const Stack = createStackNavigator<StackParams>();
 export const navigationRef = createNavigationContainerRef();
