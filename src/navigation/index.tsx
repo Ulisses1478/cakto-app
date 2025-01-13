@@ -4,10 +4,12 @@ import {
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
+import ToastManager from "toastify-react-native";
 
 import { ROUTES, StackParams } from "./routes";
+import { Context } from "../contexts";
 
-import { Context } from "@/contexts";
+import { toast } from "@/components/ui";
 
 const Stack = createStackNavigator<StackParams>();
 export const navigationRef = createNavigationContainerRef();
@@ -25,7 +27,12 @@ export default function RootStack() {
     <Context.AuthProvider>
       <Context.PinProvider>
         <StatusBar style="light" />
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
+          <ToastManager
+            showCloseIcon={false}
+            textStyle={toast.styles.text}
+            style={toast.styles.container}
+          />
           <Stack.Navigator initialRouteName={unprotectRoutes[0].name}>
             {unprotectRoutes.map((route) => (
               <Stack.Screen

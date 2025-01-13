@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 import { Image } from "@/assets/images";
 import { Avatar, Button, Template, Text } from "@/components/ui";
 import { ContextHook } from "@/contexts";
