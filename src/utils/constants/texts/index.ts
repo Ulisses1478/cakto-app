@@ -6,6 +6,7 @@ import {
   resetPassword,
   authenticated,
 } from "./screens";
+import { Utils } from "./utils";
 
 export const Text = Object.freeze({
   start,
@@ -14,4 +15,5 @@ export const Text = Object.freeze({
   confirmResetCode,
   resetPassword,
   authenticated,
+  t: Utils.translate,
 });
