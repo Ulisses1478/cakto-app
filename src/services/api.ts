@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-import { navigationRef } from "@/navigation";
-import { Utils } from "@/utils";
+import { navigationRef } from "../navigation";
+import { Utils } from "../utils";
 
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
