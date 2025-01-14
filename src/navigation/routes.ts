@@ -32,6 +32,7 @@ export type StackParams = {
     pixKey: string;
     bankAccount: { id: string; name: string };
     canEditFromAutomaticSource?: boolean;
+    fromAutomaticSource?: boolean;
   };
   PixSendTypePassword: {
     value: string;

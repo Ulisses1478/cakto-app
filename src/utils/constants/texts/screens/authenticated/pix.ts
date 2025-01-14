@@ -83,7 +83,8 @@ export const pix = {
       agency: "Agência",
       account: "Conta Corrente",
       buttons: {
-        transfer: "Transferir {value}",
+        transfer: "Transferir {{value}}",
+        pay: "Pagar {{value}}",
       },
       modals: {
         editValue: {
