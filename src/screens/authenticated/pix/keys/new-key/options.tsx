@@ -35,7 +35,9 @@ const options = [
     id: "4",
     label: Texts.keyTypes.key.replace("{{value}}", Texts.keyTypes.evp),
     type: ServiceEnums.Pix.Key.PIX_KEY_TYPES.RANDOM,
-    onPress: (cb: any) => {},
+    onPress: (cb: any) => {
+      cb("PixNewKeyRandomHome");
+    },
   },
 ];
 

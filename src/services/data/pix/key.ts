@@ -74,6 +74,13 @@ class Key {
 
     return handleMockResponse(fetcher);
   }
+
+  async create(key: string) {
+    const fetcher = () =>
+      new Promise((resolve) => setTimeout(resolve, Math.random() * 2000));
+
+    return handleMockResponse(fetcher);
+  }
 }
 
 export default new Key();

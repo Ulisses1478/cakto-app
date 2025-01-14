@@ -1,4 +1,4 @@
-type TranslateProps = Record<string, string>;
+type TranslateProps = Record<string, string | number>;
 
 function translate(text: string, fields?: TranslateProps) {
   if (!text) {
@@ -7,7 +7,7 @@ function translate(text: string, fields?: TranslateProps) {
 
   if (fields && text.includes("{{") && text.includes("}}")) {
     Object.keys(fields).forEach((key) => {
-      text = text.replace(new RegExp(`{{${key}}}`, "g"), fields[key]);
+      text = text.replace(new RegExp(`{{${key}}}`, "g"), String(fields[key]));
     });
   }
 

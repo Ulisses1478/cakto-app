@@ -61,6 +61,8 @@ export type StackParams = {
     bankName: string;
     date: string;
   };
+  PixNewKeyRandomHome: undefined;
+  PixNewKeyConfirmation: { type: string };
 };
 
 type RouteStack<T> = Record<
@@ -210,6 +212,17 @@ export const ROUTES = Object.freeze({
   pixNewKeyPortability: {
     name: "PixNewKeyPortability",
     component: Pix.Keys.New.Portability,
+    protected: true,
+    gestureEnabled: false,
+  },
+  pixNewKeyRandomHome: {
+    name: "PixNewKeyRandomHome",
+    component: Pix.Keys.New.Random.Home,
+    protected: true,
+  },
+  pixNewKeyConfirmation: {
+    name: "PixNewKeyConfirmation",
+    component: Pix.Keys.New.Confirmation,
     protected: true,
     gestureEnabled: false,
   },

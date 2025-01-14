@@ -21,6 +21,7 @@ import { Service, ServiceEnums } from "@/services";
 import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
 
+const t = Utils.Constants.Text.t;
 const Texts = Utils.Constants.Text.authenticated.pix.keys;
 
 interface ListKeyProps {
@@ -33,6 +34,7 @@ interface ListKeyProps {
 }
 
 const KEY_ENUM = ServiceEnums.Pix.Key;
+const MAX_KEYS = 5;
 
 export function Home({ navigation }: RouteStackParams<"PixHome">) {
   const modalRef = useRef<ModalProps["CustomBottomSheet"]["ref"]>(null);
@@ -102,9 +104,10 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
                   color: theme.color.white["050"],
                 }}
               >
-                {Texts.home.subtitle
-                  .replace("{{current}}", String(keys.length))
-                  .replace("{{total}}", "5")}
+                {t(Texts.home.subtitle, {
+                  current: keys.length,
+                  total: MAX_KEYS,
+                })}
               </Text.Base>
 
               <ScrollView
@@ -200,6 +203,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
           }}
           style={{ backgroundColor: theme.color.secondary.normal }}
           title={Texts.home.buttons.addKey}
+          disabled={MAX_KEYS === keys.length}
           leftIcon={<Image.Plus />}
         />
       </View>

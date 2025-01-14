@@ -1,59 +1,28 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 
 import { icons_by_type } from "../../utils";
-import { HandleKeyAlreadyRegistered } from "../portability";
 
-import {
-  Button,
-  Flex,
-  Modal,
-  ModalProps,
-  Template,
-  Text,
-} from "@/components/ui";
+import { Button, Flex, Template, Text } from "@/components/ui";
 import { BACK_BUTTON_HEIGHT } from "@/components/ui/templates/base-screen";
-import { ContextHook } from "@/contexts";
 import { RouteStackParams } from "@/navigation/routes";
 import { Service, ServiceEnums } from "@/services";
 import { theme } from "@/styles/theme";
 import { Utils } from "@/utils";
 
+const t = Utils.Constants.Text.t;
 const utils = Utils.Constants.Text.authenticated.pix.keys;
-const Texts = utils.create.cpf.home;
+const Texts = utils.create.random.home;
 
-export function Home({ navigation }: RouteStackParams<"Home">) {
-  const { auth } = ContextHook.useAuth();
+export function Home({ navigation }: RouteStackParams<"PixNewKeyRandomHome">) {
   const [loading, setLoading] = useState(false);
-  const modalRef = useRef<ModalProps["CustomBottomSheet"]["ref"]>(null);
 
   async function handleCreate(key: string) {
     setLoading(true);
-
-    // TODO: Integrar API
-    const random = Math.floor(Math.random() * 10);
-    const openPortability = random % 2 === 0;
-    if (openPortability) {
-      modalRef?.current?.onOpen({
-        children: (
-          <HandleKeyAlreadyRegistered
-            modalRef={modalRef.current}
-            type={
-              Utils.Constants.Text.authenticated.pix.keys.keyTypes
-                .national_registration
-            }
-            value={auth?.user?.cpf ?? ""}
-          />
-        ),
-      });
-      setLoading(false);
-      return;
-    }
-
     Service.Pix.Key.create(key).finally(() => {
       setLoading(false);
       navigation.navigate("PixNewKeyConfirmation", {
-        type: utils.keyTypes.national_registration,
+        type: t(utils.keyTypes.key, { value: utils.keyTypes.evp }),
       });
     });
   }
@@ -66,7 +35,6 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
       canGoBack={navigation.canGoBack()}
       goBack={() => navigation.goBack()}
     >
-      <Modal.CustomBottomSheet ref={modalRef} />
       <View
         style={{
           marginTop: BACK_BUTTON_HEIGHT,
@@ -92,45 +60,33 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
             </Text.Base>
           </View>
           <Flex style={{ gap: theme.spacing.xxxs }}>
-            {icons_by_type[ServiceEnums.Pix.Key.PIX_KEY_TYPES.CPF]()}
+            {icons_by_type[ServiceEnums.Pix.Key.PIX_KEY_TYPES.RANDOM]()}
             <View>
               <Text.Base style={{ fontSize: theme.font.size.xxs }}>
                 {Texts.label}
               </Text.Base>
               <Text.Base
                 style={{
-                  fontSize: theme.font.size.xxs,
+                  fontSize: theme.font.size.xxxs,
                   fontWeight: theme.font.weight.regular,
                   fontFamily: theme.font.family.regular,
                   color: theme.color.white["080"],
                 }}
               >
-                {Utils.Intl.Others.CPF(auth?.user?.cpf ?? "-")}
+                1eb7fcc9-98f5-44a8-96e4-f1af2cf54bc8
               </Text.Base>
             </View>
           </Flex>
         </View>
-        <View style={{ gap: theme.spacing.xxxs }}>
-          <Text.Base
-            style={{
-              fontSize: theme.font.size.xxxs,
-              fontWeight: theme.font.weight.regular,
-              lineHeight: 21,
-              fontFamily: theme.font.family.regular,
-              color: theme.color.gray["400"],
-            }}
-          >
-            {Texts.footerDescription}
-          </Text.Base>
-          <Button.Base
-            isLoading={loading}
-            onPress={() => {
-              handleCreate(auth?.user?.cpf ?? "");
-            }}
-            title={Texts.buttons.register}
-            style={{ backgroundColor: theme.color.secondary.normal }}
-          />
-        </View>
+
+        <Button.Base
+          isLoading={loading}
+          onPress={() => {
+            handleCreate("");
+          }}
+          title={Texts.buttons.register}
+          style={{ backgroundColor: theme.color.secondary.normal }}
+        />
       </View>
     </Template.Base>
   );

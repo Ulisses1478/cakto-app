@@ -166,6 +166,7 @@ export const pix = {
     },
 
     create: {
+      confirmationTitle: "{{type}} registrado com sucesso como chave Pix!",
       title: "Nova Chave Pix",
       description: "Qual tipo de chave você deseja criar?",
       portability: {
@@ -195,9 +196,16 @@ export const pix = {
             register: "Registrar meu CPF como chave PIX",
           },
         },
-
-        confirmation: {
-          title: "CPF registrado com sucesso\ncomo chave Pix!",
+      },
+      random: {
+        home: {
+          title: "Registrar chave aleatória",
+          description:
+            "Ao criar uma chave aleatória, você poderá gerar um QR Code para receber pagamentos sem precisar compartilhar seus dados pessoais",
+          label: "Chave aleatória",
+          buttons: {
+            register: "Registrar chave aleatória",
+          },
         },
       },
     },
