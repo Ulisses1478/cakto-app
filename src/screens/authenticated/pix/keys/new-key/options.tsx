@@ -43,9 +43,15 @@ const options = [
 
 export function HandleNewKey({
   modalRef,
+  currentKeyTypes,
 }: {
   modalRef: ModalProps["CustomBottomSheet"]["ref"];
+  currentKeyTypes: string[];
 }) {
+  const currentOptions = options.filter(
+    (option) => !currentKeyTypes.includes(option.type)
+  );
+
   return (
     <View
       style={{
@@ -77,7 +83,7 @@ export function HandleNewKey({
         </Text.Base>
 
         <View style={{ gap: theme.spacing.nano }}>
-          {options.map((option) => (
+          {currentOptions.map((option) => (
             <TouchableOpacity
               key={option.id}
               onPress={() => {

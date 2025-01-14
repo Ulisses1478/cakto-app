@@ -60,6 +60,10 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
       .finally(() => setLoading(false));
   }, []);
 
+  const currentKeyTypes = keys
+    .filter((key) => key.type !== ServiceEnums.Pix.Key.PIX_KEY_TYPES.RANDOM)
+    .map((key) => key.type);
+
   return (
     <Template.Base
       asBackgroundImage={{
@@ -198,12 +202,17 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
         <Button.Base
           onPress={() => {
             modalRef.current?.onOpen({
-              children: <HandleNewKey modalRef={modalRef.current} />,
+              children: (
+                <HandleNewKey
+                  modalRef={modalRef.current}
+                  currentKeyTypes={currentKeyTypes}
+                />
+              ),
             });
           }}
           style={{ backgroundColor: theme.color.secondary.normal }}
           title={Texts.home.buttons.addKey}
-          disabled={MAX_KEYS === keys.length}
+          disabled={loading || MAX_KEYS === keys.length}
           leftIcon={<Image.Plus />}
         />
       </View>
