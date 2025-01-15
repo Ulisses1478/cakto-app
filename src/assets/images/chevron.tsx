@@ -36,7 +36,23 @@ function Right(props: { svg?: SvgProps; path?: PathProps }) {
   );
 }
 
+function RightLarge(props: { svg?: SvgProps; path?: PathProps }) {
+  return (
+    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" {...props.svg}>
+      <Path
+        d="M9 18L15 12L9 6"
+        stroke="white"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props.path}
+      />
+    </Svg>
+  );
+}
+
 export default Object.freeze({
   Left,
   Right,
+  RightLarge,
 });

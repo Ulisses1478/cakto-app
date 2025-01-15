@@ -16,6 +16,8 @@ import Plus from "./plus";
 import MenuDot from "./menu-dot";
 import QRCode from "./qrcode";
 import Trash from "./trash";
+import Extract from "./extract";
+import Arrow from "./arrow";
 
 export const Image = Object.freeze({
   CaktoLogo,
@@ -36,6 +38,8 @@ export const Image = Object.freeze({
   MenuDot,
   QRCode,
   Trash,
+  Extract,
+  Arrow,
 });
 
 export const BgImages = {
