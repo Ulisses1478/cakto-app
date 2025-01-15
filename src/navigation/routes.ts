@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 
-import { Home, Pix, Register } from "../screens/authenticated";
+import { Home, Pix, Register, Extract } from "../screens/authenticated";
 import {
   Splash,
   Start,
@@ -64,6 +64,7 @@ export type StackParams = {
   };
   PixNewKeyRandomHome: undefined;
   PixNewKeyConfirmation: { type: string };
+  ExtractHome: { totalBalance: string };
 };
 
 type RouteStack<T> = Record<
@@ -226,6 +227,11 @@ export const ROUTES = Object.freeze({
     component: Pix.Keys.New.Confirmation,
     protected: true,
     gestureEnabled: false,
+  },
+  extractHome: {
+    name: "ExtractHome",
+    component: Extract.Home,
+    protected: true,
   },
 }) as RouteStack<StackParams>;
 

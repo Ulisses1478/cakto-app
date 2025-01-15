@@ -122,9 +122,6 @@ export function Portability({
       asBackgroundImage={{
         source: "home",
       }}
-      scrollViewProps={{
-        scrollEnabled: true,
-      }}
     >
       <Image.CaktoShareScreen
         svg={{ style: { marginTop: STATUS_BAR_HEIGHT } }}

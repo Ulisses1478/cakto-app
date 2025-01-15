@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 import { Image } from "@/assets/images";
-import { Avatar, Button, Template, Text } from "@/components/ui";
+import { Avatar, Button, Flex, Template, Text } from "@/components/ui";
 import { ContextHook } from "@/contexts";
 import { RouteStackParams } from "@/navigation/routes";
 import { Service } from "@/services";
@@ -27,6 +27,9 @@ function handleValue(value: number | string, hide: boolean) {
   }
   return value as string;
 }
+
+const t = Utils.Constants.Text.t;
+const Texts = Utils.Constants.Text.authenticated.home;
 
 export function Home({ navigation }: RouteStackParams<"Home">) {
   const { isReady, auth, handleLogout, hideValue, toggleHideValue } =
@@ -101,10 +104,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                 lineHeight: 17,
               }}
             >
-              {Utils.Constants.Text.authenticated.home.welcome.replace(
-                "{name}",
-                auth?.user?.firstName || ""
-              )}
+              {t(Texts.welcome, { name: auth?.user.firstName || "" })}
             </Text.Base>
           </View>
           <View style={{ flexDirection: "row", gap: theme.spacing.nano }}>
@@ -123,27 +123,43 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
         <View
           style={{
             backgroundColor: theme.color.secondary.normal,
-            padding: theme.spacing.xxxs,
+            padding: theme.spacing.xxs,
             gap: theme.spacing.xxxs,
             borderRadius: theme.borderRadius.base,
           }}
         >
-          <View style={{ gap: theme.spacing.nano }}>
-            <Text.Base
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ExtractHome", {
+                totalBalance: totalValue,
+              })
+            }
+          >
+            <Flex
               style={{
-                fontSize: theme.font.size.xxs,
-                fontWeight: theme.font.weight.medium,
-                fontFamily: theme.font.family.medium,
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              {Utils.Constants.Text.authenticated.home.totalBalance}
-            </Text.Base>
-            <Text.Base
-              style={{ fontSize: theme.font.size.xl, letterSpacing: 4 }}
-            >
-              {handleValue(totalValue, hideValue)}
-            </Text.Base>
-          </View>
+              <View style={{ gap: theme.spacing.nano }}>
+                <Text.Base
+                  style={{
+                    fontSize: theme.font.size.xxs,
+                    fontWeight: theme.font.weight.medium,
+                    fontFamily: theme.font.family.medium,
+                  }}
+                >
+                  {Texts.totalBalance}
+                </Text.Base>
+                <Text.Base
+                  style={{ fontSize: theme.font.size.xl, letterSpacing: 4 }}
+                >
+                  {handleValue(totalValue, hideValue)}
+                </Text.Base>
+              </View>
+              <Image.Chevron.RightLarge />
+            </Flex>
+          </TouchableOpacity>
 
           <View style={{ flexDirection: "row", gap: theme.spacing.nano }}>
             <TouchableOpacity
@@ -166,7 +182,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                   fontFamily: theme.font.family.regular,
                 }}
               >
-                {Utils.Constants.Text.authenticated.home.buttons.pix}
+                {Texts.buttons.pix}
               </Text.Base>
             </TouchableOpacity>
           </View>
@@ -180,9 +196,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
             borderRadius: theme.borderRadius.base,
           }}
         >
-          <Text.Base>
-            {Utils.Constants.Text.authenticated.home.revenue}
-          </Text.Base>
+          <Text.Base>{Texts.revenue}</Text.Base>
           <Text.Base
             style={{
               fontWeight: theme.font.weight.regular,
@@ -244,7 +258,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                 fontSize: theme.font.size.xxs,
               }}
             >
-              {Utils.Constants.Text.authenticated.home.availableBalance}
+              {Texts.availableBalance}
             </Text.Base>
             <Text.Base
               style={{
@@ -270,7 +284,7 @@ export function Home({ navigation }: RouteStackParams<"Home">) {
                 fontSize: theme.font.size.xxs,
               }}
             >
-              {Utils.Constants.Text.authenticated.home.pendingBalance}
+              {Texts.pendingBalance}
             </Text.Base>
             <Text.Base
               style={{

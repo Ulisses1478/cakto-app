@@ -3,12 +3,12 @@ import { Text, TextProps as RNTextProps, TextStyle } from "react-native";
 
 import { theme } from "@/styles/theme";
 
-interface TextProps extends Omit<RNTextProps, "style" | "children"> {
+export interface BaseTextProps extends Omit<RNTextProps, "style" | "children"> {
   style?: TextStyle;
   children: string | React.ReactNode;
 }
 
-export function Base(props: TextProps) {
+export function Base(props: BaseTextProps) {
   const { style, ...rest } = props;
   return (
     <Text
