@@ -1,10 +1,11 @@
-import { api, handleResponse } from "@/services/api";
+import { api } from "@/services/api";
 
 interface UserGetUnparsedResponse {
   email: string;
   first_name: string;
   last_name: string | null;
   picture: string | null;
+  cpf: string | null;
   totalSales: number;
   nextAward: {
     target_sales: number;
@@ -16,6 +17,7 @@ interface UserProps {
   lastName: string | null;
   picture: string | null;
   email: string;
+  cpf: string | null;
 }
 
 export interface UserGetResponse {
@@ -33,6 +35,7 @@ function userMapper(data: UserGetUnparsedResponse): UserGetResponse {
       firstName: data.first_name,
       lastName: data.last_name,
       picture: data.picture,
+      cpf: data.cpf,
     },
     revenue: {
       current: data.totalSales || 0,

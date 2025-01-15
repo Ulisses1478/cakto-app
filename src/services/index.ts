@@ -1,15 +1,19 @@
+import { api } from "./api";
 import Auth, {
   AuthCredentialsRequest,
   AuthCredentialsResponse,
 } from "./data/auth";
-import User, { UserGetResponse } from "./data/user";
+import Extract from "./data/extract";
 import Financial, { FinancialProps } from "./data/financial";
-import { api } from "./api";
+import { Pix, PixEnums, PixProps } from "./data/pix";
+import User, { UserGetResponse } from "./data/user";
 
 const Service = Object.freeze({
   Auth,
   User,
   Financial,
+  Pix,
+  Extract,
 });
 
 interface ServiceProps {
@@ -21,6 +25,11 @@ interface ServiceProps {
     Get: UserGetResponse;
   };
   Financial: FinancialProps;
+  Pix: PixProps;
 }
+
+export const ServiceEnums = {
+  Pix: PixEnums,
+};
 
 export { Service, ServiceProps, api };

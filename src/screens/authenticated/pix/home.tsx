@@ -187,7 +187,7 @@ export function Home({ navigation }: RouteStackParams<"PixHome">) {
             alignItems: "center",
             justifyContent: "center",
           }}
-          onPress={() => Alert.alert(Texts.home.myKeys)}
+          onPress={() => navigation.navigate("PixKeysHome")}
         >
           <Image.Pix.Key />
           <Text.Base style={{ textAlign: "center" }}>

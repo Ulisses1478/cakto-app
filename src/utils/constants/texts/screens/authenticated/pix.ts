@@ -83,7 +83,8 @@ export const pix = {
       agency: "Agência",
       account: "Conta Corrente",
       buttons: {
-        transfer: "Transferir {value}",
+        transfer: "Transferir {{value}}",
+        pay: "Pagar {{value}}",
       },
       modals: {
         editValue: {
@@ -148,6 +149,86 @@ export const pix = {
           "Não é possível fazer o pagamento.\nPeça um QR Code de Pix pra quem\nvocê quer pagar ou refaça sua compra.",
         onSubmitText: "Entendi",
       },
+    },
+  },
+  keys: {
+    home: {
+      title: "Minhas Chaves Pix",
+      description: "Gerencie suas chaves para receber transferência pelo Pix.",
+      subtitle: "{{current}} de {{total}} chaves",
+      waitingForPortability: "Aguardando portabilidade",
+      buttons: {
+        addKey: "Adicionar Chave Pix",
+      },
+    },
+    confirmationButtons: {
+      backToHome: "Voltar ao início",
+      backToPixArea: "Voltar à área Pix",
+    },
+
+    create: {
+      confirmationTitle: "{{type}} registrado com sucesso como chave Pix!",
+      title: "Nova Chave Pix",
+      description: "Qual tipo de chave você deseja criar?",
+      portability: {
+        title: "Portabilidade de chave PIX solicitada!",
+        description:
+          "Agora você precisa ##aprovar a portabilidade## da chave {{field}} {{value}} em ##{{bank_name}} até dia {{date}}!##",
+        modal: {
+          title:
+            "Este {{type}} já está registrado como chave Pix em outra conta.",
+          description:
+            "Você pode optar por utilizar a Cakto, mas a chave Pix no outro banco deixará de\nfuncionar. Qual é a sua decisão?",
+          buttons: {
+            yes: "Quero usar meu {{type}} na Cakto",
+            no: "Deixar {{type}} no outro banco",
+          },
+        },
+      },
+      cpf: {
+        home: {
+          title: "Registrar CPF",
+          description:
+            "Contatos poderão fazer transferência pelo Pix usando seu CPF",
+          label: "Seu CPF",
+          footerDescription:
+            "Quem utiliza o Pix pode perceber que você possui uma chave registrada por meio do telefone ou e-mail, mas não terá acesso às suas informações pessoais. Ao fazer um Pix para você, a pessoa poderá visualizar seu nome completo e alguns números do seu CPF.",
+          buttons: {
+            register: "Registrar meu CPF como chave PIX",
+          },
+        },
+      },
+      random: {
+        home: {
+          title: "Registrar chave aleatória",
+          description:
+            "Ao criar uma chave aleatória, você poderá gerar um QR Code para receber pagamentos sem precisar compartilhar seus dados pessoais",
+          label: "Chave aleatória",
+          buttons: {
+            register: "Registrar chave aleatória",
+          },
+        },
+      },
+    },
+    delete: {
+      title: "Excluir chave Pix",
+      description: "Você tem certeza que deseja excluir a chave Pix {{value}}?",
+      buttons: {
+        yes: "Sim, desejo excluir",
+        no: "Não desejo excluir",
+      },
+    },
+    keyTypes: {
+      key: "Chave {{value}}",
+      evp: "Aleatória",
+      national_registration: "CPF",
+      phone_number: "Celular",
+      email: "E-mail",
+    },
+    options: {
+      shareKey: "Compartilhar Chave",
+      createQRCode: "Criar QR Code",
+      delete: "Excluir Chave",
     },
   },
 };

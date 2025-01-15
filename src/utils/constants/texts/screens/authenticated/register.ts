@@ -16,7 +16,7 @@ export const register = {
   },
   faceValidation: {
     home: {
-      title: "Verificação facil",
+      title: "Verificação facial",
       description:
         "Para garantir a segurança, precisamos\nrealizar uma verificação facial. Por favor,\n siga as instruções a seguir",
       instrunctions: [

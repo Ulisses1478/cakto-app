@@ -28,9 +28,10 @@ export function CopyAndPaste({ navigation }: RouteStackParams<"PixSend">) {
     const mock_value = Math.floor(Math.random() * 10);
     navigation.navigate("PixSendConfirmation", {
       pixKey: mock_pix_key,
-      value: mock_value,
+      value: String(mock_value),
       canEditFromAutomaticSource: mock_value === 0,
       bankAccount: { id: "1", name: "Cakto" },
+      fromAutomaticSource: true,
     });
   }
 

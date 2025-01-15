@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-import { navigationRef } from "@/navigation";
-import { Utils } from "@/utils";
+import { navigationRef } from "../navigation";
+import { Utils } from "../utils";
 
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -38,7 +38,7 @@ export type HandleResponseProps<T = unknown> =
   | { data: T; success: true; error: null }
   | { error: AxiosError; success: false; data: null };
 
-export async function handleResponse<T>(
+export async function handleResponse<T = unknown>(
   cb: () => Promise<AxiosResponse<T>>
 ): Promise<HandleResponseProps<T>> {
   try {
@@ -47,4 +47,13 @@ export async function handleResponse<T>(
   } catch (error: any) {
     return { error, success: false, data: null };
   }
+}
+
+export interface BaseResponseProps {
+  message: string;
+}
+
+export async function handleMockResponse(cb: () => Promise<any>): Promise<any> {
+  cb();
+  return { data: { message: "Sucesso" }, success: true, error: null };
 }

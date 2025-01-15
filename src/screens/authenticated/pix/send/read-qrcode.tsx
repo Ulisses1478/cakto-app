@@ -113,6 +113,7 @@ export function ReadQRCode({ navigation }: RouteStackParams<"PixSend">) {
               value: mock_value,
               canEditFromAutomaticSource: mock_value === 0,
               bankAccount: { id: "1", name: "Cakto" },
+              fromAutomaticSource: true,
             },
           },
         ],

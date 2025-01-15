@@ -17,6 +17,7 @@ import { Utils } from "@/utils";
 
 const IntlNumber = Utils.Intl.Number;
 const handleCurrency = IntlNumber.formatCurrency;
+const t = Utils.Constants.Text.t;
 const Texts = Utils.Constants.Text.authenticated.pix.send.confirmation;
 const mock_receiver = "Jhon Doe";
 
@@ -28,6 +29,7 @@ export function Confirmation({
   const unparsedPixValue = handleCurrency(unparsedValue / 100);
   const pixKey = route.params.pixKey;
   const bankAccount = route.params.bankAccount;
+  const fromAutomaticSource = route.params?.fromAutomaticSource ?? false;
   const canEdit = route.params?.canEditFromAutomaticSource ?? true;
   const [value, setValue] = useState(unparsedPixValue);
   const [pixValue, setPixValue] = useState(unparsedPixValue);
@@ -141,6 +143,10 @@ export function Confirmation({
     });
   }
 
+  const transferButtonText = fromAutomaticSource
+    ? Texts.buttons.pay
+    : Texts.buttons.transfer;
+
   return (
     <Template.Base
       asBackgroundImage={{
@@ -160,7 +166,7 @@ export function Confirmation({
                 bankAccount,
               })
             }
-            title={Texts.buttons.transfer.replace("{value}", pixValue)}
+            title={t(transferButtonText, { value: pixValue })}
             style={{ backgroundColor: theme.color.secondary.normal }}
           />
         ),

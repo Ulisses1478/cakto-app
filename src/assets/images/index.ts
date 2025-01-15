@@ -12,6 +12,12 @@ import Chat from "./chat";
 import X from "./x";
 import CaktoShareScreen from "./cakto-share-screen";
 import Share from "./share";
+import Plus from "./plus";
+import MenuDot from "./menu-dot";
+import QRCode from "./qrcode";
+import Trash from "./trash";
+import Extract from "./extract";
+import Arrow from "./arrow";
 
 export const Image = Object.freeze({
   CaktoLogo,
@@ -28,6 +34,12 @@ export const Image = Object.freeze({
   X,
   CaktoShareScreen,
   Share,
+  Plus,
+  MenuDot,
+  QRCode,
+  Trash,
+  Extract,
+  Arrow,
 });
 
 export const BgImages = {

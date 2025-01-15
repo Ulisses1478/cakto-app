@@ -1,5 +1,5 @@
 export const home = {
-  welcome: "Olá, {name}",
+  welcome: "Olá, {{name}}",
   totalBalance: "Saldo total",
   revenue: "Faturamento",
   availableBalance: "Saldo disponível",

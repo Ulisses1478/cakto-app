@@ -20,28 +20,36 @@ function DisplayUserInfo(props: DisplayUserInfoProps) {
       style={{ maxHeight: 300 }}
       contentContainerStyle={{ gap: theme.spacing.nano }}
     >
-      {props.fields.map((field, index) => (
-        <View key={index}>
-          <Text.Base
-            style={{
-              fontSize: theme.font.size.xxs,
-              fontFamily: theme.font.family.medium,
-              fontWeight: theme.font.weight.medium,
-              color: theme.color.white["080"],
-            }}
-          >
-            {field.label}
-          </Text.Base>
-          <Text.Base
-            style={{
-              fontFamily: theme.font.family.medium,
-              fontWeight: theme.font.weight.medium,
-            }}
-          >
-            {field.value}
-          </Text.Base>
-        </View>
-      ))}
+      {props.fields.map((field, index) => {
+        let value = field.value;
+
+        if (field.label === Texts.commons.birthDate) {
+          value = new Date(value).toLocaleDateString();
+        }
+
+        return (
+          <View key={index}>
+            <Text.Base
+              style={{
+                fontSize: theme.font.size.xxs,
+                fontFamily: theme.font.family.medium,
+                fontWeight: theme.font.weight.medium,
+                color: theme.color.white["080"],
+              }}
+            >
+              {field.label}
+            </Text.Base>
+            <Text.Base
+              style={{
+                fontFamily: theme.font.family.medium,
+                fontWeight: theme.font.weight.medium,
+              }}
+            >
+              {value}
+            </Text.Base>
+          </View>
+        );
+      })}
     </ScrollView>
   );
 }
@@ -58,9 +66,13 @@ export function Register({ navigation }: RouteStackParams<"RegisterHome">) {
     const currentData = Object.keys(Texts.commons).reduce(
       (acc, key) => {
         const parsedKey = key as KeyOfCompanyProps;
+        let value: string | Date = response[parsedKey] || "";
+        if (key === "birthDate" && value) {
+          value = new Date(value);
+        }
         acc.push({
           label: Texts.commons[parsedKey],
-          value: response[parsedKey] || "",
+          value: value.toString(),
         });
 
         return acc;

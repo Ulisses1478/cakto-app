@@ -1,5 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 
+import { Home, Pix, Register, Extract } from "../screens/authenticated";
 import {
   Splash,
   Start,
@@ -8,9 +9,7 @@ import {
   ConfirmResetCode,
   ResetPassword,
 } from "../screens/public";
-
-import { Home, Pix, Register } from "@/screens/authenticated";
-import { ServiceProps } from "@/services";
+import { ServiceProps } from "../services";
 
 export type StackParams = {
   Splash: undefined;
@@ -33,6 +32,7 @@ export type StackParams = {
     pixKey: string;
     bankAccount: { id: string; name: string };
     canEditFromAutomaticSource?: boolean;
+    fromAutomaticSource?: boolean;
   };
   PixSendTypePassword: {
     value: string;
@@ -54,6 +54,17 @@ export type StackParams = {
   };
   RegisterFaceValidationHome: undefined;
   RegisterFaceValidationConfirmSelfie: undefined;
+  PixKeysHome: undefined;
+  PixNewKeyCpfHome: undefined;
+  PixNewKeyPortability: {
+    type: string;
+    value: string;
+    bankName: string;
+    date: string;
+  };
+  PixNewKeyRandomHome: undefined;
+  PixNewKeyConfirmation: { type: string };
+  ExtractHome: { totalBalance: string };
 };
 
 type RouteStack<T> = Record<
@@ -188,6 +199,38 @@ export const ROUTES = Object.freeze({
   registerRegisterFaceValidationConfirmSelfie: {
     name: "RegisterFaceValidationConfirmSelfie",
     component: Register.FaceValidation.ConfirmSelfie,
+    protected: true,
+  },
+  pixKeysHome: {
+    name: "PixKeysHome",
+    component: Pix.Keys.Home,
+    protected: true,
+  },
+  pixNewKeyCpfHome: {
+    name: "PixNewKeyCpfHome",
+    component: Pix.Keys.New.CPF.Home,
+    protected: true,
+  },
+  pixNewKeyPortability: {
+    name: "PixNewKeyPortability",
+    component: Pix.Keys.New.Portability,
+    protected: true,
+    gestureEnabled: false,
+  },
+  pixNewKeyRandomHome: {
+    name: "PixNewKeyRandomHome",
+    component: Pix.Keys.New.Random.Home,
+    protected: true,
+  },
+  pixNewKeyConfirmation: {
+    name: "PixNewKeyConfirmation",
+    component: Pix.Keys.New.Confirmation,
+    protected: true,
+    gestureEnabled: false,
+  },
+  extractHome: {
+    name: "ExtractHome",
+    component: Extract.Home,
     protected: true,
   },
 }) as RouteStack<StackParams>;
